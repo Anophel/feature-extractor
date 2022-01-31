@@ -77,8 +77,10 @@ class W2VVExtractor:
         # Apply w2vv embedding
         img_features = np.tanh(
             np.matmul(self.img_weight, img_features.T).T + self.img_bias.reshape([1, -1]))
+        
+        # DO NOT NORM THE OUTPUT BUT RATHER US COSINE SIMILARITY
         # Norm the output
-        img_features = img_features / \
-            np.linalg.norm(img_features, axis=1, keepdims=True)
+        #img_features = img_features / \
+        #    np.linalg.norm(img_features, axis=1, keepdims=True)
 
         return img_features
