@@ -1,0 +1,4 @@
+from .cielab_kmeans_extractor import CIELABKMeansExctractor
+from .cielab_positional_extractor import CIELABPositionalExctractor
+from .resnet50_extractor import ResNet50Extractor
+from .w2vv_extractor import W2VVExtractor
