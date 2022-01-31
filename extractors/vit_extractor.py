@@ -1,10 +1,11 @@
 import tensorflow as tf
 import numpy as np
+from .extractor import Extractor
 from transformers import ViTFeatureExtractor
 from transformers import TFViTForImageClassification
 from PIL import Image
 
-class ViTExtractor:
+class ViTExtractor(Extractor):
     def __init__(self, size : str = "base") -> None:
         source = None
         if size == "base" or size == "large":

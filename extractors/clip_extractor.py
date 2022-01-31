@@ -1,9 +1,10 @@
 from PIL import Image
+from .extractor import Extractor
 import numpy as np
 from transformers import CLIPFeatureExtractor, CLIPVisionModel
 import torch
 
-class CLIPExtractor:
+class CLIPExtractor(Extractor):
     def __init__(self, size : str = "small") -> None:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

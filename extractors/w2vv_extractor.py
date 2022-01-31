@@ -1,11 +1,12 @@
 import mxnet as mx
 import numpy as np
+from .extractor import Extractor
 import os
 from PIL import Image
 from collections import namedtuple
 
 
-class W2VVExtractor:
+class W2VVExtractor(Extractor):
     def __init__(self, networks_path: str = "models", use_gpu: bool = True, batch_size: int = 1) -> None:
         self.resnet152 = self.loadModel(
             os.path.join(networks_path, "resnet-152"), 0, use_gpu, batch_size)

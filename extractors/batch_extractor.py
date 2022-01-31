@@ -1,8 +1,10 @@
 import numpy as np
+from .extractor import Extractor
 
-class BatchExtractor:
 
-    def __init__(self, batch_size : int, extractor) -> None:
+class BatchExtractor(Extractor):
+
+    def __init__(self, batch_size: int, extractor: Extractor) -> None:
         self.batch_size = batch_size
         self.extractor = extractor
 
@@ -11,6 +13,3 @@ class BatchExtractor:
         for i in range(0, len(image_paths), self.batch_size):
             results.append(self.extractor(image_paths[i:i + self.batch_size]))
         return np.concatenate(results)
-
-    
-

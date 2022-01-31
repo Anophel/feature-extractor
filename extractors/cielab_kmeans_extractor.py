@@ -1,9 +1,10 @@
 import numpy as np
+from .extractor import Extractor
 from skimage import io
 from skimage import color
 from sklearn.cluster import KMeans
 
-class CIELABKMeansExctractor:
+class CIELABKMeansExctractor(Extractor):
     def __init__(self, k: int) -> None:
         self.k = k
 

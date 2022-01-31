@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
+from .extractor import Extractor
 
-class ResNetV2Extractor:
+class ResNetV2Extractor(Extractor):
     def __init__(self, size: str = "50") -> None:
         args = {"weights": "imagenet", "include_top": False, "pooling": "avg", "input_shape":(224,224,3)}
         if size == "50":

@@ -1,9 +1,10 @@
 from PIL import Image
 import numpy as np
+from .extractor import Extractor
 from transformers import ImageGPTFeatureExtractor, ImageGPTModel
 import torch
 
-class ImageGPTExtractor:
+class ImageGPTExtractor(Extractor):
 
     def __init__(self, size : str = "small") -> None:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -1,8 +1,9 @@
 import numpy as np
+from .extractor import Extractor
 from skimage import io
 from skimage import color
 
-class CIELABPositionalExctractor:
+class CIELABPositionalExctractor(Extractor):
     def __init__(self, regions: tuple = (4,4), aggType: str = "medoid", approx_sample: int = 100) -> None:
         # Regions = (rows, columns)
         self.regions = regions
