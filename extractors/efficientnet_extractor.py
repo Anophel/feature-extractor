@@ -4,6 +4,7 @@ from .extractor import Extractor
 
 class EfficientNetExtractor(Extractor):
     def __init__(self, size: str = "0") -> None:
+        super().__init__(size=size)
         args = {"weights": "imagenet", "include_top": False, "pooling": "avg", "input_shape":(224,224,3)}
         if size == "0":
             self.effnet = tf.keras.applications.efficientnet.EfficientNetB0(**args)

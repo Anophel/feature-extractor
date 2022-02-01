@@ -5,6 +5,7 @@ from .extractor import Extractor
 class BatchExtractor(Extractor):
 
     def __init__(self, batch_size: int, extractor: Extractor) -> None:
+        super().__init__(extractor=extractor)
         self.batch_size = batch_size
         self.extractor = extractor
 

@@ -8,6 +8,7 @@ from collections import namedtuple
 
 class W2VVExtractor(Extractor):
     def __init__(self, networks_path: str = "models", use_gpu: bool = True, batch_size: int = 1) -> None:
+        super().__init__(networks_path=networks_path, use_gpu=use_gpu, batch_size=batch_size)
         self.resnet152 = self.loadModel(
             os.path.join(networks_path, "resnet-152"), 0, use_gpu, batch_size)
 

@@ -7,6 +7,7 @@ import torch
 class ImageGPTExtractor(Extractor):
 
     def __init__(self, size : str = "small") -> None:
+        super().__init__(size=size)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         if size == "small" or size == "medium" or size == "large":

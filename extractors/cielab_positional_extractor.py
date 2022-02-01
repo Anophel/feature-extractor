@@ -5,6 +5,7 @@ from skimage import color
 
 class CIELABPositionalExctractor(Extractor):
     def __init__(self, regions: tuple = (4,4), aggType: str = "medoid", approx_sample: int = 100) -> None:
+        super().__init__(regions=regions, aggType=aggType, approx_sample=approx_sample)
         # Regions = (rows, columns)
         self.regions = regions
         # Only for aggType == "medoid-approx"
@@ -43,7 +44,7 @@ class CIELABPositionalExctractor(Extractor):
             rgb = io.imread(img_path)
             lab = color.rgb2lab(rgb)
             regions = [arr2 for arr in np.vsplit(lab, self.regions[0]) for arr2 in np.hsplit(arr, self.regions[1]) ]
-            features.append(np.array(list(map(self.aggFunction, regions))))
+            features.append(np.array(list(map(self.aggFunction, regions))).flatten())
 
         return np.stack(features)
 

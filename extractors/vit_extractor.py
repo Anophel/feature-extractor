@@ -7,6 +7,7 @@ from PIL import Image
 
 class ViTExtractor(Extractor):
     def __init__(self, size : str = "base") -> None:
+        super().__init__(size=size)
         source = None
         if size == "base" or size == "large":
             source = f"google/vit-{size}-patch16-224"

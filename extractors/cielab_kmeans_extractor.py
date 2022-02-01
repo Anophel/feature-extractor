@@ -6,6 +6,7 @@ from sklearn.cluster import KMeans
 
 class CIELABKMeansExctractor(Extractor):
     def __init__(self, k: int) -> None:
+        super().__init__(k=k)
         self.k = k
 
     def __call__(self, image_paths: list) -> np.ndarray:

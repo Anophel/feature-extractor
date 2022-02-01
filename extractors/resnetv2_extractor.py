@@ -4,6 +4,7 @@ from .extractor import Extractor
 
 class ResNetV2Extractor(Extractor):
     def __init__(self, size: str = "50") -> None:
+        super().__init__(size=size)
         args = {"weights": "imagenet", "include_top": False, "pooling": "avg", "input_shape":(224,224,3)}
         if size == "50":
             self.resnet = tf.keras.applications.resnet_v2.ResNet50V2(**args)
