@@ -22,7 +22,7 @@ class ImageGPTExtractor(Extractor):
         self.model.to(self.device)
 
     def __call__(self, image_paths: list) -> np.ndarray:
-        encoding = self.feature_extractor([Image.open(img_path) for img_path in image_paths], return_tensors="pt")
+        encoding = self.feature_extractor([Image.open(img_path).convert('RGB') for img_path in image_paths], return_tensors="pt")
         pixel_values = encoding.pixel_values.to(self.device)
 
         outputs = self.model(pixel_values, output_hidden_states=True)

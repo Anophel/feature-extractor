@@ -20,7 +20,7 @@ class ViTExtractor(Extractor):
         self.model = TFViTForImageClassification.from_pretrained(source, output_hidden_states=True)
 
     def __call__(self, image_paths: list) -> np.ndarray:
-        inputs = self.feature_extractor(images=[Image.open(img_path) for img_path in image_paths], return_tensors="tf")
+        inputs = self.feature_extractor(images=[Image.open(img_path).convert('RGB') for img_path in image_paths], return_tensors="tf")
 
         pixel_values = inputs['pixel_values']
 
