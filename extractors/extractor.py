@@ -3,8 +3,8 @@ import numpy as np
 
 class Extractor:
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.__name__ = f"{type(self).__name__}({args}; {kwargs})" 
+    def __init__(self, **kwargs) -> None:
+        self.__name__ = f"{type(self).__name__}({kwargs})" 
 
     @abc.abstractmethod
     def __call__(self, image_paths: list) -> np.ndarray:

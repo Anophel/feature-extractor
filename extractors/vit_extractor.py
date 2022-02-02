@@ -4,10 +4,12 @@ from .extractor import Extractor
 from transformers import ViTFeatureExtractor
 from transformers import TFViTForImageClassification
 from PIL import Image
+from transformers import logging as huglogging
 
 class ViTExtractor(Extractor):
     def __init__(self, size : str = "base") -> None:
         super().__init__(size=size)
+        huglogging.set_verbosity_error()
         source = None
         if size == "base" or size == "large":
             source = f"google/vit-{size}-patch16-224"

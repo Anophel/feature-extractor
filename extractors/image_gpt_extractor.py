@@ -3,11 +3,13 @@ import numpy as np
 from .extractor import Extractor
 from transformers import ImageGPTFeatureExtractor, ImageGPTModel
 import torch
+from transformers import logging as huglogging
 
 class ImageGPTExtractor(Extractor):
 
     def __init__(self, size : str = "small") -> None:
         super().__init__(size=size)
+        huglogging.set_verbosity_error()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         if size == "small" or size == "medium" or size == "large":
