@@ -28,5 +28,5 @@ class ImageGPTExtractor(Extractor):
         outputs = self.model(pixel_values, output_hidden_states=True)
         hidden_states = outputs.hidden_states
 
-        feature_vector = torch.mean(hidden_states[-1], dim=1)
+        feature_vector = torch.mean(hidden_states[len(hidden_states) // 2], dim=1)
         return feature_vector.cpu().detach().numpy()
