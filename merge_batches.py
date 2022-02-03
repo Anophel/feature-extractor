@@ -20,20 +20,24 @@ def main(args):
 
         for file in files:
             value = None
+            save = False
             if file.endswith(".npy"):
-                with open(file, "rb") as f:
+                with open(os.path.join(root, file), "rb") as f:
                     value = np.load(f)
+                save = True
             elif file.endswith(".txt") or file.endswith(".csv"):
-                with open(file, "rb") as f:
-                    value = f.readlines()
+                with open(os.path.join(root, file), "r") as f:
+                    value = f.read()
+                save = True
             
-            if value != None:
+            if save:
                 if file not in to_merge:
                     to_merge[file] = []
                 to_merge[file].append(value)
         
         print(f"{prefix} DONE")
-    
+    print("Load done")
+    print("Merging")
     for filename in to_merge:
         if filename.endswith(".npy"):
             value = np.concatenate(to_merge[filename])
@@ -43,7 +47,7 @@ def main(args):
             with open(os.path.join(args.output_dir, filename), "w") as f:
                 for part in to_merge[filename]:
                     f.write(part)
-                    f.write("\n")
+        print(f"{filename} merged")
 
 if __name__ == "__main__":
     args = parser.parse_args([] if "__file__" not in globals() else None)
