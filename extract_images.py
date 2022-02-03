@@ -80,7 +80,7 @@ def process_extraction(args):
             args.batch_size, extractor, show_progress=True)
         logging.warning(f"Extracting with {ext_name}")
         features = extractor(images_paths)
-        file_name = ext_name.replace("(", "_").replace(")", "_").replace("\"", "").replace("=", ":")
+        file_name = ext_name.replace("(", "_").replace(")", "_").replace("\"", "").replace("=", ":") + ".npy"
         with open(os.path.join(args.output_dir, file_name), 'wb') as f:
             np.save(f, features)
         logging.warning(f"Extracting with {ext_name} DONE\n")
