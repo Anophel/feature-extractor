@@ -9,3 +9,4 @@ from .image_gpt_extractor import ImageGPTExtractor
 from .batch_extractor import BatchExtractor
 from .clip_extractor import CLIPExtractor
 from .extractor import Extractor
+from .blurry_extractor import BlurryExtractor
