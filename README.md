@@ -16,7 +16,9 @@ source venv/bin/activate
 pip install -r ./requirements.txt
 ```
 
-## Python Usage
+## Extraction
+
+### Python Usage
 
 ```
 from extractors import ResNetExtractor # Import any extractor
@@ -33,8 +35,12 @@ image_features = extractor(images_paths) # Extract image features
 #  N - features dimension
 ```
 
-## CLI Usage
+### CLI Usage
 
 ```
 python extract_images.py -e 'CIELABKMeansExctractor(k=8)' 'CLIPExtractor(size="small")' -i ./imagelist.txt -o ./output --batch_size 16 -ev
 ```
+
+## Dataset cleaning
+
+See [dataset-cleaning.ipynb](https://github.com/Anophel/feature-extractor/blob/master/dataset_cleaning.ipynb)
