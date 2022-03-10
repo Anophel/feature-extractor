@@ -48,3 +48,11 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+extracted_features_merged/*
+
+.ipynb_checkpoints/
+
+models/*.params
+models/*.json
+models/*.npy

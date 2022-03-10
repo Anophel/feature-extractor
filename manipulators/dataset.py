@@ -8,7 +8,7 @@ from matplotlib.axes import Axes
 from collections.abc import Iterable
 from requests.auth import HTTPBasicAuth
 import requests
-from typing import Callable
+from typing import Callable, Union
 
 
 class Dataset:
@@ -22,7 +22,7 @@ class Dataset:
         self._media_server = media_server
         self._media_server_auth = media_server_auth
         with open(imagelist_path, "r") as f:
-            self._image_list = [s.strip() for s in f.readlines()]
+            self._image_list = np.array([s.strip() for s in f.readlines()])
         with open(features_path, "rb") as f:
             self._features = np.load(f)
             self._features /= np.linalg.norm(self._features,
@@ -32,20 +32,6 @@ class Dataset:
                 assert self_sim > 0.9 and self_sim < 1.1, "Self similarity should be 1.0"
         assert len(
             self._image_list) == self._features.shape[0], "Different size of imagelist and features! Check if they match!!"
-
-    def get_similarity(self, a: int, b: int):
-        return np.dot(self._features[a], self._features[b])
-
-    def get_knn(self, target: int, k: int = 4):
-        distances = np.dot(self._features, self._features[target])
-        return np.argsort(distances)[::-1][:k]
-
-    def get_knn_external(self, target: np.ndarray, k: int = 4):
-        assert len(target.shape) == 1, "Target has to be vector"
-        assert target.shape[0] == self._features.shape[0], "Target and dataset features has to have the same dimension"
-
-        distances = np.dot(self._features, target)
-        return np.argsort(distances)[::-1][:k]
 
     def get_image(self, target: int) -> BytesIO:
         if self._media_server is None:
@@ -84,26 +70,43 @@ class Dataset:
         plt.tight_layout()
         plt.show()
 
-    def show_knn(self, target: int, k: int = 4):
+    def _get_feature_vector(self, target: Union[int, np.ndarray]) -> np.ndarray:
+        if type(target) is np.ndarray:
+            target /= np.linalg.norm(target, axis=-1, keepdims=True)
+            assert len(target.shape) == 1, "Target has to be vector"
+            assert target.shape[0] == self._features.shape[1], "Target and dataset features has to have the same dimension"
+        else:
+            target = self._features[target]
+        return target
+
+    def get_similarity(self, target: Union[int, np.ndarray], other: int):
+        target = self._get_feature_vector(target)
+        return np.dot(target, self._features[other])
+
+    def get_knn(self, target: Union[int, np.ndarray], k: int = 4):
+        target = self._get_feature_vector(target)
+        distances = np.dot(self._features, target)
+        return np.argsort(distances)[::-1][:k]
+
+    def show_knn(self, target: Union[int, np.ndarray], k: int = 4):
         neighbors = self.get_knn(target, k)
         self.show_grid(neighbors, lambda neigh,
                        offset: f"ID: {neigh}, SIM: {self.get_similarity(target, neigh)}")
 
-    def get_nth_neighbours(self, target: int, nths: Iterable):
-        distances = np.dot(self._features, self._features[target])
+    def get_nth_neighbours(self, target: Union[int, np.ndarray], nths: Iterable):
+        target = self._get_feature_vector(target)
+        distances = np.dot(self._features, target)
         return np.argsort(distances)[::-1][nths]
 
-    def show_nth_neighbours(self, target: int, nths: Iterable):
+    def show_nth_neighbours(self, target: Union[int, np.ndarray], nths: Iterable):
         neighbors = self.get_nth_neighbours(target, nths)
         self.show_grid(neighbors, lambda neigh,
                        offset: f"ID: {neigh}, SIM: {self.get_similarity(target, neigh)}, nth: {nths[offset]}")
 
-    def show_knn_external(self, target: np.ndarray, k: int = 4):
-        assert len(target.shape) == 1, "Target has to be vector"
-        assert target.shape[0] == self._features.shape[0], "Target and dataset features has to have the same dimension"
-
-        neighbors = self.get_knn_external(target, k)
-        self.show_grid(neighbors, lambda neigh,
-                       offset: f"ID: {neigh}, SIM: {self.get_similarity(target, neigh)}")
-
+    def filter_knn(self, target: Union[int, np.ndarray], k: int):
+        neighbors = self.get_knn(target, k)
+        mask = np.ones(self._features.shape[0], dtype=bool)
+        mask[neighbors] = False
+        self._features = self._features[mask]
+        self._image_list = self._image_list[mask]
 
