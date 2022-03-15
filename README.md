@@ -2,6 +2,12 @@
 
 ## Install
 
+### Prerequisities
+
+ - Python >=3.8
+ - [Python-venv](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment)
+ - Pip >=21
+
 ### Windows
 ```
 py -m venv venv
