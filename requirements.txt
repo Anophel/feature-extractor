@@ -1,7 +1,7 @@
 opencv_python==4.5.5.62
 mxnet==1.8.0.post0
 matplotlib==3.3.4
-numpy==1.17.4
+numpy==1.19.3
 torch==1.9.0
 transformers==4.16.2
 alive_progress==2.2.0

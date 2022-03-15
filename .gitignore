@@ -56,3 +56,5 @@ extracted_features_merged/*
 models/*.params
 models/*.json
 models/*.npy
+
+venv/
