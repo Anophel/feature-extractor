@@ -26,7 +26,7 @@ class Dataset:
         # Load paths to images
         with open(imagelist_path, "r") as f:
             self._image_list = np.array([s.strip() for s in f.readlines()])
-        self._full_image_list = self._image_list.copy()
+        self._full_image_list = self._image_list
         
         # Load numpy features
         with open(features_path, "rb") as f:
@@ -47,7 +47,7 @@ class Dataset:
     def get_image(self, target: int) -> BytesIO:
         """ Loads image in binary format from
         the appropriate storage based on the
-        index provided.
+        index provided.features_path
         """
         if self._media_server is None:
             with open(self._image_list[target], 'rb') as f:
