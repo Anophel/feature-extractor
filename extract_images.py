@@ -12,6 +12,7 @@ from os.path import isdir
 import os
 import inspect
 import sys
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--extractors", nargs="+", required=True,
@@ -91,7 +92,7 @@ def main(args):
     if args.extra_verbose:
         logging.basicConfig(
             format='%(levelname)s:\t%(message)s', level=logging.DEBUG)
-    if args.verbose:
+    elif args.verbose:
         logging.basicConfig(
             format='%(levelname)s:\t%(message)s', level=logging.INFO)
     else:
@@ -109,8 +110,10 @@ def main(args):
     logging.info("Arguments OK")
     logging.info("\n")
     logging.info("*** Starting extraction ***")
+    start = time.time()
     process_extraction(args)
-    logging.info("DONE")
+    duration = time.time() - start
+    logging.info(f"DONE in {duration}s")
 
 
 if __name__ == "__main__":
