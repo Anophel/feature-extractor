@@ -12,4 +12,4 @@ pip install --no-cache-dir scikit_learn==1.0.2
 
 cd /scratch
 
-python feature-extractor/extract_images.py -e 'ViTExtractor()' -i ./imagelist.txt -o ./output --batch_size 64 -v
+python feature-extractor/extract_images.py -e "$1" -i ./imagelist.txt -o ./output --batch_size 64 -v
