@@ -9,7 +9,7 @@ split -l 100000 --numeric-suffixes $1/imagelist_jpg.txt $1/imagelist_jpg_part.tx
 
 mkdir ./scripts/generated 2>/dev/null
 
-for $extractor in 'CLIPExtractor("small")' 'CLIPExtractor("medium")' \
+for extractor in 'CLIPExtractor("small")' 'CLIPExtractor("medium")' \
  'EfficientNetExtractor("0")' 'EfficientNetExtractor("2")' 'EfficientNetExtractor("4")' \
  'EfficientNetExtractor("7")' 'ImageGPTExtractor("small")' 'ImageGPTExtractor("medium")' \
  'ResNetV2Extractor("50")' 'ResNetV2Extractor("101")' 'ResNetV2Extractor("152")' \
