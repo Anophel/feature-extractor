@@ -3,6 +3,7 @@
 if [ $# -ne 2 ]
   then
     echo "Use: ./run_all_extractions_for_imagelist.sh BASE_IMAGE_LIST_DIR EXTRACTOR"
+	exit 1
 fi
 
 split -l 100000 --numeric-suffixes $1/imagelist_jpg.txt $1/imagelist_jpg_part.txt.
