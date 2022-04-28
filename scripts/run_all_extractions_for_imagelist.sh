@@ -22,8 +22,7 @@ do
 		num=`echo $imglst | sed "s#^.*/##g"`
 		run_file="./scripts/generated/$extractor_escaped/run_extractor_$num.sh"
 		if [ ! -f $run_file ]; then 
-			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | \
-				sed "s/#EXTRACTOR#/$extractor/g" ./scripts/run_extractor_imagelist.sh > $run_file
+			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s/#EXTRACTOR#/$extractor/g" > $run_file
 			qsub $run_file
 		fi
 	done
