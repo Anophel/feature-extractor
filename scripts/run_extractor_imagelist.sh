@@ -10,6 +10,7 @@ echo Scratch dir: $SCRATCHDIR
 echo Working dir: `pwd`
 
 IMAGELIST=#LST#
+BASEDIR=#EXT_ESCAPED#
 
 echo Image list: $IMAGELIST
 
@@ -27,9 +28,9 @@ cp -r $DATADIR/feature-extractor ./feature-extractor
 
 mkdir output
 
-singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:21.12-tf2-py3.SIF ./feature-extractor/scripts/run_extractor_singularity.sh '#EXTRACTOR#'
+singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:21.12-tf2-py3.SIF /scratch/feature-extractor/scripts/run_extractor_singularity.sh '#EXTRACTOR#'
 
-mkdir $DATADIR/extracted_clean_features/$BASEDIR
+mkdir $DATADIR/extracted_clean_features/$BASEDIR 2>/dev/null
 
 cp ./imagelist.txt ./output
 mv ./output/* $DATADIR/extracted_clean_features/$BASEDIR

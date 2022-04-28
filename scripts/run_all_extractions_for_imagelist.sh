@@ -9,11 +9,11 @@ split -l 100000 --numeric-suffixes $1/imagelist_jpg.txt $1/imagelist_jpg_part.tx
 
 mkdir ./scripts/generated 2>/dev/null
 
-for extractor in 'CLIPExtractor("small")' 'CLIPExtractor("medium")' \
- 'EfficientNetExtractor("0")' 'EfficientNetExtractor("2")' 'EfficientNetExtractor("4")' \
- 'EfficientNetExtractor("7")' 'ImageGPTExtractor("small")' 'ImageGPTExtractor("medium")' \
- 'ResNetV2Extractor("50")' 'ResNetV2Extractor("101")' 'ResNetV2Extractor("152")' \
- 'ViTExtractor("base")' 'ViTExtractor("large")' 'W2VVExtractor()'
+for extractor in 'CLIPExtractor("small")' 'CLIPExtractor("medium")' #\
+# 'EfficientNetExtractor("0")' 'EfficientNetExtractor("2")' 'EfficientNetExtractor("4")' \
+# 'EfficientNetExtractor("7")' 'ImageGPTExtractor("small")' 'ImageGPTExtractor("medium")' \
+# 'ResNetV2Extractor("50")' 'ResNetV2Extractor("101")' 'ResNetV2Extractor("152")' \
+# 'ViTExtractor("base")' 'ViTExtractor("large")' 'W2VVExtractor()'
 do
 	extractor_escaped=`echo $extractor | tr '()"' '__.'`
 	mkdir ./scripts/generated/$extractor_escaped 2>/dev/null
@@ -22,7 +22,7 @@ do
 		num=`echo $imglst | sed "s#^.*/##g"`
 		run_file="./scripts/generated/$extractor_escaped/run_extractor_$num.sh"
 		if [ ! -f $run_file ]; then 
-			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s/#EXTRACTOR#/$extractor/g" > $run_file
+			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s/#EXTRACTOR#/$extractor/g" | sed "s/#EXT_ESCAPED#/$extractor_escaped/g" > $run_file
 			qsub $run_file
 		fi
 	done
