@@ -28,7 +28,9 @@ cp -r $DATADIR/feature-extractor ./feature-extractor
 
 mkdir output
 
-singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:21.12-tf2-py3.SIF /scratch/feature-extractor/scripts/run_extractor_singularity.sh '#EXTRACTOR#'
+sed -i 's/#EXTRACT#/#EXTRACTOR#/g' ./feature-extractor/scripts/run_extractor_singularity.sh
+
+singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:21.12-tf2-py3.SIF /scratch/feature-extractor/scripts/run_extractor_singularity.sh
 
 mkdir $DATADIR/extracted_clean_features/$BASEDIR 2>/dev/null
 
