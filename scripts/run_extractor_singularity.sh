@@ -1,4 +1,4 @@
-apt-get install ffmpeg libsm6 libxext6  -y
+sudo apt-get install ffmpeg libsm6 libxext6  -y
 
 pip install --no-cache-dir opencv_python==4.5.5.62
 pip install --no-cache-dir torch==1.9.0
