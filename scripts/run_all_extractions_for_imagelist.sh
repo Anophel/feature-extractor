@@ -15,14 +15,14 @@ for extractor in 'CLIPExtractor("small")' 'CLIPExtractor("medium")' \
  'ResNetV2Extractor("50")' 'ResNetV2Extractor("101")' 'ResNetV2Extractor("152")' \
  'ViTExtractor("base")' 'ViTExtractor("large")' 'W2VVExtractor("feature-extractor/models")'
 do
-	extractor_escaped=`echo $extractor | tr '()"' '__.'`
+	extractor_escaped=`echo $extractor | tr '()"/' '__.-'`
 	mkdir ./scripts/generated/$extractor_escaped 2>/dev/null
 	for imglst in $1/imagelist_jpg_part.txt.*
 	do
 		num=`echo $imglst | sed "s#^.*/##g"`
 		run_file="./scripts/generated/$extractor_escaped/run_extractor_$num.sh"
 		if [ ! -f $run_file ]; then 
-			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s/#EXTRACTOR#/$extractor/g" | sed "s/#EXT_ESCAPED#/$extractor_escaped/g" > $run_file
+			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s|#EXTRACTOR#|$extractor|g" | sed "s|#EXT_ESCAPED#|$extractor_escaped|g" > $run_file
 			qsub $run_file
 		fi
 	done
