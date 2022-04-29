@@ -19,7 +19,9 @@ for extractor in $'-e \\\'CLIPExtractor("small")\\\' --batch_size 64' $'-e \\\'C
  $'-e \\\'ViTExtractor("base")\\\' --batch_size 64' $'-e \\\'ViTExtractor("large")\\\' --batch_size 64' \
  $'-e \\\'W2VVExtractor(networks_path="feature-extractor/models", batch_size=128)\\\' --batch_size 128'
 do
-	extractor_escaped=`echo "$extractor" | sed "s/^-e \(.*(.*)\) --batch_size.*$/\1/g" | tr '()"=/' '__.:-'`
+	echo "$extractor"
+	extractor_escaped=`echo "$extractor" | sed "s/^-e [^a-zA-Z]*\(.*(.*)\)[^a-zA-Z]* --batch_size.*$/\1/g" | tr '()"=/' '__.:-' | tr -d ' '`
+	echo "$extractor_escaped"
 	mkdir ./scripts/generated/$extractor_escaped 2>/dev/null
 	for imglst in $1/imagelist_jpg_part.txt.*
 	do
@@ -27,7 +29,7 @@ do
 		run_file="./scripts/generated/$extractor_escaped/run_extractor_$num.sh"
 		if [ ! -f $run_file ]; then 
 			sed "s|#LST#|$imglst|g" ./scripts/run_extractor_imagelist.sh | sed "s|#EXTRACTOR#|$extractor|g" | sed "s|#EXT_ESCAPED#|$extractor_escaped|g" > $run_file
-			qsub $run_file
+			#qsub $run_file
 		fi
 	done
 done
