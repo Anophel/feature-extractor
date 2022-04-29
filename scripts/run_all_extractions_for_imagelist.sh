@@ -16,7 +16,7 @@ for extractor in $'-e \\\\\\\'CLIPExtractor("small")\\\\\\\' --batch_size 64' $'
  $'-e \\\\\\\'ImageGPTExtractor("medium")\\\\\\\' --batch_size 16' \
  $'-e \\\\\\\'ResNetV2Extractor("50")\\\\\\\' --batch_size 256' $'-e \\\\\\\'ResNetV2Extractor("101")\\\\\\\' --batch_size 256' \
  $'-e \\\\\\\'ResNetV2Extractor("152")\\\\\\\' --batch_size 256' \
- $'-e \\\\\\\'ViTExtractor("base")\\\\\\\' --batch_size 64' $'-e \\\\\\\'ViTExtractor("large")\\\\\\\' --batch_size 64' \
+ $'-e \\\\\\\'ViTExtractor("base")\\\\\\\' --batch_size 1' $'-e \\\\\\\'ViTExtractor("large")\\\\\\\' --batch_size 1' \
  $'-e \\\\\\\'W2VVExtractor(networks_path="feature-extractor/models", batch_size=128)\\\\\\\' --batch_size 128'
 do
 	echo "$extractor"
