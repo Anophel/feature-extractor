@@ -42,7 +42,7 @@ class W2VVExtractor(Extractor):
         for path in image_paths:
             # Load image
             img = Image.open(path)
-            img.resize((224, 224))
+            img = img.resize((224, 224))
             img_np = np.array(img).astype(np.float32)
             img_bitmaps.append(img_np)
 
