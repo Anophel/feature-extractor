@@ -12,4 +12,8 @@ pip install --no-cache-dir scikit_learn==1.0.2
 
 cd /scratch
 
+echo "GPU information:"
+nvidia-smi
+echo "***"
+
 python feature-extractor/extract_images.py '#EXTRACT#' -i ./imagelist.txt -o ./output -v

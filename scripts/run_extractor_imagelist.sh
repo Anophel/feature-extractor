@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N Features_extraction
 #PBS -q gpu
-#PBS -l select=1:ncpus=1:mem=20gb:scratch_local=40gb:ngpus=1
+#PBS -l select=1:ncpus=1:mem=20gb:scratch_local=40gb:ngpus=1:gpu_cap=cuda60:cuda_version=11.0
 #PBS -l walltime=24:00:00
 
 DATADIR=/storage/plzen1/home/anopheles
@@ -28,7 +28,7 @@ cp -r $DATADIR/feature-extractor ./feature-extractor
 
 mkdir output
 
-sed -i 's/#EXTRACT#/#EXTRACTOR#/g' ./feature-extractor/scripts/run_extractor_singularity.sh
+sed -i 's|#EXTRACT#|#EXTRACTOR#|g' ./feature-extractor/scripts/run_extractor_singularity.sh
 
 singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:21.12-tf2-py3.SIF /scratch/feature-extractor/scripts/run_extractor_singularity.sh
 
