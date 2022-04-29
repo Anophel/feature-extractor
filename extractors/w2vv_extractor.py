@@ -41,8 +41,7 @@ class W2VVExtractor(Extractor):
         img_features = []
         for path in image_paths:
             # Load image
-            img = Image.open(path)
-            img = img.resize((224, 224))
+            img = Image.open(path).resize((224, 224)).convert("RGB")
             img_np = np.array(img).astype(np.float32)
             img_bitmaps.append(img_np)
 
