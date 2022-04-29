@@ -22,11 +22,12 @@ class ImageGPTExtractor(Extractor):
         self.model.to(self.device)
 
     def __call__(self, image_paths: list) -> np.ndarray:
-        encoding = self.feature_extractor([Image.open(img_path).convert('RGB') for img_path in image_paths], return_tensors="pt")
-        pixel_values = encoding.pixel_values.to(self.device)
+        with torch.no_grad():
+            encoding = self.feature_extractor([Image.open(img_path).convert('RGB') for img_path in image_paths], return_tensors="pt")
+            pixel_values = encoding.pixel_values.to(self.device)
 
-        outputs = self.model(pixel_values, output_hidden_states=True)
-        hidden_states = outputs.hidden_states
+            outputs = self.model(pixel_values, output_hidden_states=True)
+            hidden_states = outputs.hidden_states
 
-        feature_vector = torch.mean(hidden_states[len(hidden_states) // 2], dim=1)
-        return feature_vector.cpu().detach().numpy()
+            feature_vector = torch.mean(hidden_states[len(hidden_states) // 2], dim=1)
+            return feature_vector.cpu().detach().numpy()
