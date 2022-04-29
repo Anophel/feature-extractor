@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N Features_extraction
 #PBS -q gpu
-#PBS -l select=1:ncpus=1:mem=20gb:scratch_local=40gb:ngpus=1:gpu_cap=cuda60:cuda_version=11.0
+#PBS -l select=1:ncpus=1:mem=20gb:scratch_local=40gb:ngpus=1:gpu_cap=cuda60:cuda_version=11.2
 #PBS -l walltime=24:00:00
 
 DATADIR=/storage/plzen1/home/anopheles

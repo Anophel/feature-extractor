@@ -10,6 +10,7 @@ if [[ "$yn" == "y" || "$yn" == "Y" ]]; then
 	wget http://data.mxnet.io/models/imagenet-11k/resnet-152/resnet-152-0000.params;
 	wget http://data.mxnet.io/models/imagenet-11k/resnet-152/resnet-152-symbol.json;
 	wget https://isis-data.science.uva.nl/mettes/imagenet-shuffle/mxnet/resnext101_bottomup_12988/resnext-101-1-0040.params;
+	mv ./resnext-101-1-0040.params ./resnext-101-0040.params
 	wget https://isis-data.science.uva.nl/mettes/imagenet-shuffle/mxnet/resnext101_bottomup_12988/resnext-101-symbol.json;
 	wget --user som --password hunter http://otrok.ms.mff.cuni.cz:4000/models/w2vv-img_bias-2048floats.npy
 	wget --user som --password hunter http://otrok.ms.mff.cuni.cz:4000/models/w2vv-img_weight-2048x4096floats.npy
