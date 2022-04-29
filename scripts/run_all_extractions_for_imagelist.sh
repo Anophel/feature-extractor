@@ -9,15 +9,15 @@ split -l 100000 --numeric-suffixes $1/imagelist_jpg.txt $1/imagelist_jpg_part.tx
 
 mkdir ./scripts/generated 2>/dev/null
 
-for extractor in $'-e \\\'CLIPExtractor("small")\\\' --batch_size 64' $'-e \\\'CLIPExtractor("medium")\\\' --batch_size 64' \
- $'-e \\\'EfficientNetExtractor("0")\\\' --batch_size 256' $'-e \\\'EfficientNetExtractor("2")\\\' --batch_size 256' \
- $'-e \\\'EfficientNetExtractor("4")\\\' --batch_size 256' $'-e \\\'EfficientNetExtractor("6")\\\' --batch_size 256' \
- $'-e \\\'EfficientNetExtractor("7")\\\' --batch_size 256' $'-e \\\'ImageGPTExtractor("small")\\\' --batch_size 16' \
- $'-e \\\'ImageGPTExtractor("medium")\\\' --batch_size 16' \
- $'-e \\\'ResNetV2Extractor("50")\\\' --batch_size 256' $'-e \\\'ResNetV2Extractor("101")\\\' --batch_size 256' \
- $'-e \\\'ResNetV2Extractor("152")\\\' --batch_size 256' \
- $'-e \\\'ViTExtractor("base")\\\' --batch_size 64' $'-e \\\'ViTExtractor("large")\\\' --batch_size 64' \
- $'-e \\\'W2VVExtractor(networks_path="feature-extractor/models", batch_size=128)\\\' --batch_size 128'
+for extractor in $'-e \\\\\\\'CLIPExtractor("small")\\\\\\\' --batch_size 64' $'-e \\\\\\\'CLIPExtractor("medium")\\\\\\\' --batch_size 64' \
+ $'-e \\\\\\\'EfficientNetExtractor("0")\\\\\\\' --batch_size 256' $'-e \\\\\\\'EfficientNetExtractor("2")\\\\\\\' --batch_size 256' \
+ $'-e \\\\\\\'EfficientNetExtractor("4")\\\\\\\' --batch_size 256' $'-e \\\\\\\'EfficientNetExtractor("6")\\\\\\\' --batch_size 256' \
+ $'-e \\\\\\\'EfficientNetExtractor("7")\\\\\\\' --batch_size 256' $'-e \\\\\\\'ImageGPTExtractor("small")\\\\\\\' --batch_size 16' \
+ $'-e \\\\\\\'ImageGPTExtractor("medium")\\\\\\\' --batch_size 16' \
+ $'-e \\\\\\\'ResNetV2Extractor("50")\\\\\\\' --batch_size 256' $'-e \\\\\\\'ResNetV2Extractor("101")\\\\\\\' --batch_size 256' \
+ $'-e \\\\\\\'ResNetV2Extractor("152")\\\\\\\' --batch_size 256' \
+ $'-e \\\\\\\'ViTExtractor("base")\\\\\\\' --batch_size 64' $'-e \\\\\\\'ViTExtractor("large")\\\\\\\' --batch_size 64' \
+ $'-e \\\\\\\'W2VVExtractor(networks_path="feature-extractor/models", batch_size=128)\\\\\\\' --batch_size 128'
 do
 	echo "$extractor"
 	extractor_escaped=`echo "$extractor" | sed "s/^-e [^a-zA-Z]*\(.*(.*)\)[^a-zA-Z]* --batch_size.*$/\1/g" | tr '()"=/' '__.:-' | tr -d ' '`
