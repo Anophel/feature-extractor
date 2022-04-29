@@ -17,9 +17,9 @@ for extractor in '-e CLIPExtractor("small") --batch_size 64' '-e CLIPExtractor("
  '-e ResNetV2Extractor("50") --batch_size 256' '-e ResNetV2Extractor("101") --batch_size 256' \
  '-e ResNetV2Extractor("152") --batch_size 256' \
  '-e ViTExtractor("base") --batch_size 64' '-e ViTExtractor("large") --batch_size 64' \
- '-e W2VVExtractor(networks_path="feature-extractor/models", batch_size=128) --batch_size 128'
+ '-e W2VVExtractor(networks_path="feature-extractor/models",batch_size=128) --batch_size 128'
 do
-	extractor_escaped=`echo $extractor | sed "s/^-e \(.*\) --batch_size.*/\1/g" | tr '()"=/' '__.:-'`
+	extractor_escaped=`echo "$extractor" | sed "s/^-e \(.*(.*)\) --batch_size.*$/\1/g" | tr '()"=/' '__.:-'`
 	mkdir ./scripts/generated/$extractor_escaped 2>/dev/null
 	for imglst in $1/imagelist_jpg_part.txt.*
 	do
