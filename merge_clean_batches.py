@@ -18,7 +18,7 @@ def main(args):
     prefixes = []
     regex = re.compile(r"^(.*)[.][0-9]+$")
     for path in os.listdir(main_root):
-        if os.path.isdir(path):
+        if os.path.isdir(os.path.join(main_root, path)):
             prefix = regex.sub("\\1", path)
             if len(prefix) != 0 and prefix not in prefixes:
                 prefixes.append(prefix)
@@ -34,17 +34,17 @@ def main(args):
         # Traverse all files with given prefix
         for path in sorted(os.listdir(main_root)):
             # Check if is directory and matches prefix
-            if os.path.isdir(path) and path.startswith(prefix):
+            if os.path.isdir(os.path.join(main_root, path)) and path.startswith(prefix):
                 # Traverse all files in the directories
-                for file in os.listdir(path):
-                    if os.path.isfile(file):
+                for file in os.listdir(os.path.join(main_root, path)):
+                    if os.path.isfile(os.path.join(main_root, path, file)):
                         # Load features
                         if file.endswith(".npy"):
-                            with open(file, "rb") as f:
+                            with open(os.path.join(main_root, path, file), "rb") as f:
                                 features.append(np.load(f))
                         # Load image lists
                         if file.endswith(".txt"):
-                            with open(file, "r") as f:
+                            with open(os.path.join(main_root, path, file), "r") as f:
                                 image_lists.append(f.read())
 
         # Save loaded features and images lists
