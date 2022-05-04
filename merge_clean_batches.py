@@ -20,7 +20,7 @@ def main(args):
     for path in os.listdir(main_root):
         if os.path.isdir(path):
             prefix = regex.sub("\\1", path)
-            if len(prefix) != 0 and prefix not in prefix:
+            if len(prefix) != 0 and prefix not in prefixes:
                 prefixes.append(prefix)
 
     print(f"Loaded {len(prefixes)} prefixes")
