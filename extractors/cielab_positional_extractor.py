@@ -1,7 +1,5 @@
 import numpy as np
 from .extractor import Extractor
-from skimage import io
-from skimage import color
 
 class CIELABPositionalExctractor(Extractor):
     def __init__(self, regions: tuple = (4,4), aggType: str = "medoid", approx_sample: int = 100) -> None:
@@ -38,6 +36,8 @@ class CIELABPositionalExctractor(Extractor):
         return np.mean(region, axis=(0,1))
 
     def __call__(self, image_paths: list) -> np.ndarray:
+        from skimage import io
+        from skimage import color
         features = []
 
         for img_path in image_paths:

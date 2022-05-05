@@ -1,14 +1,13 @@
-import mxnet as mx
-import numpy as np
 from .extractor import Extractor
-import os
-from PIL import Image
-from collections import namedtuple
+import numpy as np
 
 
 class W2VVExtractor(Extractor):
     def __init__(self, networks_path: str = "models", use_gpu: bool = True, batch_size: int = 1) -> None:
         super().__init__(networks_path=networks_path, use_gpu=use_gpu, batch_size=batch_size)
+        import os
+        from collections import namedtuple
+
         self.resnet152 = self.loadModel(
             os.path.join(networks_path, "resnet-152"), 0, use_gpu, batch_size)
 
@@ -25,6 +24,8 @@ class W2VVExtractor(Extractor):
         self.batch_size = batch_size
 
     def loadModel(self, network_path, network_epoch, use_gpu, batch_size):
+        import mxnet as mx
+
         sym, arg_params, aux_params = mx.model.load_checkpoint(
             network_path, network_epoch)
 
@@ -37,6 +38,9 @@ class W2VVExtractor(Extractor):
         return network
 
     def __call__(self, image_paths: list) -> np.ndarray:
+        from PIL import Image
+        import mxnet as mx
+
         img_bitmaps = []
         img_features = []
         for path in image_paths:
