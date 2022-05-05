@@ -1,6 +1,4 @@
 import argparse
-from email.policy import default
-from xmlrpc.client import Boolean
 import numpy as np
 from extractors import *
 import logging
@@ -10,7 +8,6 @@ from os import W_OK
 from os.path import isfile
 from os.path import isdir
 import os
-import inspect
 import sys
 import time
 

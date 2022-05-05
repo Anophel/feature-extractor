@@ -1,10 +1,11 @@
-import tensorflow as tf
 import numpy as np
 from .extractor import Extractor
 
 class ResNetV2Extractor(Extractor):
     def __init__(self, size: str = "50") -> None:
         super().__init__(size=size)
+        import tensorflow as tf
+
         args = {"weights": "imagenet", "include_top": False, "pooling": "avg", "input_shape":(224,224,3)}
         if size == "50":
             self.resnet = tf.keras.applications.resnet_v2.ResNet50V2(**args)
@@ -23,6 +24,8 @@ class ResNetV2Extractor(Extractor):
 
     
     def __call__(self, image_paths: list) -> np.ndarray:
+        import tensorflow as tf
+        
         img_bitmaps = []
         for path in image_paths:
             img = tf.keras.utils.load_img(path, target_size=(224,224))

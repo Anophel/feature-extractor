@@ -1,14 +1,14 @@
-from PIL import Image
-import numpy as np
 from .extractor import Extractor
-from transformers import ImageGPTFeatureExtractor, ImageGPTModel
-import torch
-from transformers import logging as huglogging
+import numpy as np
 
 class ImageGPTExtractor(Extractor):
 
     def __init__(self, size : str = "small") -> None:
         super().__init__(size=size)
+        from transformers import logging as huglogging
+        from transformers import ImageGPTFeatureExtractor, ImageGPTModel
+        import torch
+        
         huglogging.set_verbosity_error()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -22,6 +22,9 @@ class ImageGPTExtractor(Extractor):
         self.model.to(self.device)
 
     def __call__(self, image_paths: list) -> np.ndarray:
+        from PIL import Image
+        import torch
+
         with torch.no_grad():
             encoding = self.feature_extractor([Image.open(img_path).convert('RGB') for img_path in image_paths], return_tensors="pt")
             pixel_values = encoding.pixel_values.to(self.device)

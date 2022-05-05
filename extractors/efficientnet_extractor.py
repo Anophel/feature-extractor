@@ -1,10 +1,11 @@
-import tensorflow as tf
 import numpy as np
 from .extractor import Extractor
 
 class EfficientNetExtractor(Extractor):
     def __init__(self, size: str = "0") -> None:
         super().__init__(size=size)
+        import tensorflow as tf
+
         args = {"weights": "imagenet", "include_top": False, "pooling": "avg", "input_shape":(224,224,3)}
         if size == "0":
             self.effnet = tf.keras.applications.efficientnet.EfficientNetB0(**args)
@@ -32,6 +33,8 @@ class EfficientNetExtractor(Extractor):
         self.effnet_extractor = tf.keras.Model(inputs=[inputs], outputs=[x])
     
     def __call__(self, image_paths: list) -> np.ndarray:
+        import tensorflow as tf
+        
         img_bitmaps = []
         for path in image_paths:
             img = tf.keras.utils.load_img(path, target_size=(224,224))
