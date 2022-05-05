@@ -10,6 +10,7 @@ class CIELABKMeansExctractor(Extractor):
         from skimage import io
         from skimage import color
         from sklearn.cluster import KMeans
+        
         features = []
         for img_path in image_paths:
             rgb = io.imread(img_path)

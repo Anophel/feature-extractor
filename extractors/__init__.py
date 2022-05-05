@@ -10,3 +10,5 @@ from .batch_extractor import BatchExtractor
 from .clip_extractor import CLIPExtractor
 from .extractor import Extractor
 from .blurry_extractor import BlurryExtractor
+from .vlad_extractor import VLADExctractor
+from .rgb_histogram_extractor import RGBHistogramExtractor

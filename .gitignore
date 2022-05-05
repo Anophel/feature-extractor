@@ -56,5 +56,6 @@ extracted_features_merged/*
 models/*.params
 models/*.json
 models/*.npy
+!models/VLAD_dict_64.npy
 
 venv/

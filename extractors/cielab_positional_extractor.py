@@ -2,7 +2,7 @@ import numpy as np
 from .extractor import Extractor
 
 class CIELABPositionalExctractor(Extractor):
-    def __init__(self, regions: tuple = (4,4), aggType: str = "medoid", approx_sample: int = 100) -> None:
+    def __init__(self, regions: tuple = (4,4), aggType: str = "mean", approx_sample: int = 100) -> None:
         super().__init__(regions=regions, aggType=aggType, approx_sample=approx_sample)
         # Regions = (rows, columns)
         self.regions = regions
