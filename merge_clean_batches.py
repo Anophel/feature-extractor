@@ -50,10 +50,10 @@ def main(args):
         # Save loaded features and images lists
         features = np.concatenate(features)
         print(f"Loaded features {features.shape}")
-        with open(os.path.join(args.output_dir, prefix, ".npy"), "wb") as f:
+        with open(os.path.join(args.output_dir, prefix + ".npy"), "wb") as f:
             np.save(f, features)
 
-        with open(os.path.join(args.output_dir, prefix, ".txt"), "w") as f:
+        with open(os.path.join(args.output_dir, prefix + ".txt"), "w") as f:
             for part in image_lists:
                 f.write(part)
         print(f"Merging {prefix} DONE")
