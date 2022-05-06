@@ -38,6 +38,7 @@ class CIELABPositionalExctractor(Extractor):
     def __call__(self, image_paths: list) -> np.ndarray:
         from skimage import io
         from skimage import color
+        from skimage import transform
         features = []
 
         for img_path in image_paths:
@@ -46,6 +47,8 @@ class CIELABPositionalExctractor(Extractor):
                 rgb = color.gray2rgb(rgb)
             elif len(rgb.shape) == 4:
                 rgb = color.rgba2rgb(rgb)
+            
+            rgb = transform.resize(rgb, (360, 640))
             
             lab = color.rgb2lab(rgb)
             regions = [arr2 for arr in np.vsplit(lab, self.regions[0]) for arr2 in np.hsplit(arr, self.regions[1]) ]
