@@ -50,11 +50,26 @@ def main(args):
         # Save loaded features and images lists
         features = np.concatenate(features)
         print(f"Loaded features {features.shape}")
+
+        image_list = "\n".join(image_lists)
+        image_names = np.array(image_list.split("\n"))
+        
+        assert len(image_names) == features.shape[0]
+
+        print("Sorting features")
+        features_sorted = features[np.argsort(image_names)]
+        image_names_sorted = image_names[np.argsort(image_names)]
+
+        print("Checking asserts")
+        for i in range(10):
+            assert np.sum(features[i] - features_sorted[np.where(image_names[i] == image_names_sorted)[0]]) < .000001
+
+        print("Writing output")
         with open(os.path.join(args.output_dir, prefix + ".npy"), "wb") as f:
-            np.save(f, features)
+            np.save(f, features_sorted)
 
         with open(os.path.join(args.output_dir, prefix + ".txt"), "w") as f:
-            for part in image_lists:
+            for part in image_names_sorted:
                 f.write(part)
         print(f"Merging {prefix} DONE")
         print("***")
