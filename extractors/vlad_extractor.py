@@ -5,6 +5,7 @@ class VLADExctractor(Extractor):
     def __init__(self, dictionary_path: str = "models/VLAD_dict_64.npy", alpha: int = 0.5) -> None:
         super().__init__()
         import cv2 as cv
+        cv.setNumThreads(4)
         self.sift = cv.SIFT_create()
         self.dict = np.load(dictionary_path)
         self.alpha = alpha
@@ -12,6 +13,7 @@ class VLADExctractor(Extractor):
 
     def __call__(self, image_paths: list) -> np.ndarray:
         import cv2 as cv
+        cv.setNumThreads(4)
 
         features = []
         for img_path in image_paths:
