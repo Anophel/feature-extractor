@@ -52,8 +52,9 @@ def main(args):
         print(f"Loaded features {features.shape}")
 
         image_list = "\n".join(image_lists)
-        image_names = np.array(image_list.split("\n"))
+        image_names = np.array(list(filter(lambda s: len(s) > 0, image_list.split("\n"))))
         
+        print(image_names.shape, features.shape)
         assert image_names.shape[0] == features.shape[0]
 
         print("Sorting features")
