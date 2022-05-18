@@ -54,7 +54,7 @@ def main(args):
         image_list = "\n".join(image_lists)
         image_names = np.array(image_list.split("\n"))
         
-        assert len(image_names) == features.shape[0]
+        assert image_names.shape[0] == features.shape[0]
 
         print("Sorting features")
         features_sorted = features[np.argsort(image_names)]
