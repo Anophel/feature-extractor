@@ -57,22 +57,22 @@ def main(args):
     with open(config_path, "r") as stream:
         config = yaml.safe_load(stream)
 
-    input_dir = config.input_dir
+    input_dir = config["input_dir"]
     assert os.path.isdir(input_dir)
 
-    output_file = config.output_file
+    output_file = config["output_file"]
     assert not os.path.isfile(output_file)
     with open(output_file, mode='a'): pass
     assert os.path.isfile(output_file)
 
-    num_of_targets = config.targets
+    num_of_targets = int(config["targets"])
     assert num_of_targets > 0 and num_of_targets < 10000
 
-    distance_measures = config.distance_measures
+    distance_measures = config["distance_measures"]
     for dm in distance_measures:
         assert dm in DISTANCE_MEASURES
 
-    distance_classes = config.distance_classes
+    distance_classes = list(map(lambda x: int(x), config["distance_classes"]))
     for dc in distance_classes:
         assert dc is int and dc >= 0
     
