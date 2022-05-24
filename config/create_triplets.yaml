@@ -1,0 +1,12 @@
+input_dir: ~/extracted_clean_features_merged
+output_file: ~/triplets/triplets.csv
+targets: 100
+distance_measures:
+  - cosine_distance
+  - euclidean_distance
+distance_classes:
+  - 16
+  - 256
+  - 4096
+  - 65536
+  - 1010398
