@@ -145,11 +145,9 @@ def main(args):
     print("Triplets DONE")
     print("Computing additional model metrics")
 
-    with alive_bar(len(generated_triplets)) as bar:
+    with alive_bar(len(generated_triplets) * len(prefixes) * len(distance_measures)) as bar:
         for prefix in prefixes:
             # Load model details
-            with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
-                image_list = np.array([line.rstrip() for line in f])
             features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
 
             for triplet in generated_triplets:
@@ -162,6 +160,9 @@ def main(args):
                     triplet.other_models_distances[f"{prefix}_{dist_measure}_closer"] = closer_distance
                     triplet.other_models_distances[f"{prefix}_{dist_measure}_farther"] = farther_distance
                     triplet.other_models_distances[f"{prefix}_{dist_measure}_options"] = options_distance
+
+                    # Increment counter
+                    bar()
                 
     print("Saving triplets")
     header = list(filter(lambda col: col != "other_models_distances", Triplet._fields))
