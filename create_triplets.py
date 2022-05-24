@@ -2,7 +2,6 @@ import numpy as np
 import argparse
 import os
 import re
-from torch import double
 import yaml
 from alive_progress import alive_bar
 from typing import NamedTuple
