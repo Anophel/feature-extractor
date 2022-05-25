@@ -114,8 +114,8 @@ def main(args):
             with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
                 image_list = np.array([line.rstrip() for line in f])
             features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
-            targets_idx = np.where(np.any(image_list[:, np.newaxis] == targets, axis=-1))
-
+            targets_idx = np.where(np.any(image_list[:, np.newaxis] == targets, axis=-1))[0]
+            
             # Select distance measure
             for dist_measure in distance_measures:
                 # Crete triplets for each target
