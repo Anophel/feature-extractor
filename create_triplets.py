@@ -11,6 +11,7 @@ parser.add_argument("-c", "--config", required=True, type=str,
                     help="Configuration file")
 
 class Triplet(NamedTuple):
+    model: str
     target_path: str
     closer_path: str
     farther_path: str
@@ -136,7 +137,7 @@ def main(args):
                             options_distance = DISTANCE_MEASURES[dist_measure][1](closer_idx, farther_idx, features)
 
                             # Save the created triplet with additional metadata
-                            generated_triplets.append(Triplet(image_list[target_idx], image_list[closer_idx], 
+                            generated_triplets.append(Triplet(prefix, image_list[target_idx], image_list[closer_idx], 
                                 image_list[farther_idx], prefix, target_idx, closer_idx, farther_idx, distances[closer_idx], 
                                 distances[farther_idx], options_distance, {}))
                             
