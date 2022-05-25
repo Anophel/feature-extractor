@@ -176,6 +176,7 @@ def main(args):
             if not first:
                 f.write(",")
             f.write(col)
+            first = False
         
         for col in other_models_header:
             f.write(",")
