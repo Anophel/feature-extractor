@@ -85,7 +85,7 @@ def main(args):
     print("Loading prefixes")
 
     prefixes = set()
-    regex = re.compile(r"^(.*)[.][0-9]+$")
+    regex = re.compile(r"^(.*).txt$")
     for path in os.listdir(input_dir):
         if os.path.isfile(os.path.join(input_dir, path)):
             prefix = regex.sub("\\1", path)
