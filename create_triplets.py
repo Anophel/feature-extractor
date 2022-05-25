@@ -127,11 +127,11 @@ def main(args):
 
                     for closer_class in distance_classes[:-1]:
                         # Find first closer option for the triplet
-                        closer_idx = np.random.choice(sorted_indexes[get_class_start(closer_class) : closer_class], 1)
+                        closer_idx = np.random.choice(sorted_indexes[get_class_start(closer_class, distance_classes) : closer_class], 1)
 
                         for farther_class in filter(lambda c: c > closer_class, distance_classes):
                             # Find the farther option for the triplet
-                            farther_idx = np.random.choice(sorted_indexes[get_class_start(farther_class) : farther_class], 1)
+                            farther_idx = np.random.choice(sorted_indexes[get_class_start(farther_class, distance_classes) : farther_class], 1)
                             # Compute distance between options
                             options_distance = DISTANCE_MEASURES[dist_measure][1](closer_idx, farther_idx, features)
 
