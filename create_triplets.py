@@ -98,7 +98,7 @@ def main(args):
     np.random.seed(42)
 
     # Select targets
-    targets = select_targets(os.path.join(input_dir, next(iter(prefixes))), num_of_targets)
+    targets = select_targets(os.path.join(input_dir, next(iter(prefixes)) + ".txt"), num_of_targets)
     print("Targets: ")
     print(targets)
     print("***")
