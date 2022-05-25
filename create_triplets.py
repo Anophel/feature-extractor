@@ -42,7 +42,7 @@ DISTANCE_MEASURES = {
 
 def select_targets(image_list_path: str, num_of_targets: int):
     with open(image_list_path, "r") as f:
-        image_list = [line.rstrip() for line in f]
+        image_list = [line.rstrip() for line in f.readlines()]
     return np.random.choice(image_list, size=num_of_targets, replace=False)
 
 def get_class_start(end, distance_classes):
