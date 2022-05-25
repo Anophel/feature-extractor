@@ -180,7 +180,7 @@ def main(args):
         for col in other_models_header:
             f.write(",")
             f.write(col)
-
+        f.write('\n')
         # Write data
         for triplet in generated_triplets:
             first = True
@@ -193,7 +193,7 @@ def main(args):
             for col in other_models_header:
                 f.write(",")
                 f.write(str(triplet.other_models_distances[col]))
-
+            f.write('\n')
 
 if __name__ == "__main__":
     args = parser.parse_args([] if "__file__" not in globals() else None)
