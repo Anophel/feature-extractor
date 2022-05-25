@@ -56,6 +56,8 @@ def main(args):
     config = None
     with open(config_path, "r") as stream:
         config = yaml.safe_load(stream)
+    print("CONFIG:")
+    print(config)
 
     input_dir = config["input_dir"]
     assert os.path.isdir(input_dir)
