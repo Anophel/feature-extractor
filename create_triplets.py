@@ -187,12 +187,12 @@ def main(args):
             for col in header:
                 if not first:
                     f.write(",")
-                f.write(getattr(triplet, col))
+                f.write(str(getattr(triplet, col)))
                 first = False
             
             for col in other_models_header:
                 f.write(",")
-                f.write(triplet.other_models_distances[col])
+                f.write(str(triplet.other_models_distances[col]))
 
 
 if __name__ == "__main__":
