@@ -87,7 +87,7 @@ def main(args):
     prefixes = set()
     regex = re.compile(r"^(.*).txt$")
     for path in os.listdir(input_dir):
-        if os.path.isfile(os.path.join(input_dir, path)):
+        if os.path.isfile(os.path.join(input_dir, path)) and path.endswith(".txt"):
             prefix = regex.sub("\\1", path)
             prefixes.add(prefix)
 
