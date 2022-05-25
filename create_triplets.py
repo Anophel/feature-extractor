@@ -74,7 +74,7 @@ def main(args):
 
     distance_classes = list(map(lambda x: int(x), config["distance_classes"]))
     for dc in distance_classes:
-        assert dc is int and dc >= 0
+        assert type(dc) is int and dc >= 0
     
     for dc1, dc2 in zip(distance_classes, distance_classes[1:]):
         assert dc1 < dc2
