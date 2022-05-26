@@ -52,7 +52,7 @@ def main(args):
         vlad_favorite += 1
 
         sqls.append( (f"insert into triplets values (nextval('default_sequence'), "
-            f"{target_path}, {option_one_path}, {option_two_path}, {model_name},"
+            f"'{target_path}', '{option_one_path}', '{option_two_path}', '{model_name}',"
             f"{model_favorite}, {deep_learning_favorite}, {color_favorite}, {vlad_favorite},"
             f");"
         ) )
