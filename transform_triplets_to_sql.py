@@ -23,7 +23,7 @@ def main(args):
     random.seed(666)
 
     sqls = []
-    for row, index in df.iterrows():
+    for index, row  in df.iterrows():
         # Get basic attributes from rows
         target_path = row["target_path"]
         model_name = row["model"]
