@@ -109,7 +109,7 @@ def main(args):
     generated_triplets = []
 
     with alive_bar(len(prefixes) * len(distance_measures) * 
-        int(len(distance_classes) * ((len(distance_classes) - 1) / 2)) * targets.shape[0]) as bar:
+        int(len(distance_classes) * ((len(distance_classes) + 1) / 2)) * targets.shape[0]) as bar:
         for prefix in prefixes:
             # Load model details
             with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
