@@ -130,7 +130,7 @@ def main(args):
                         # Find first closer option for the triplet
                         closer_idx = np.random.choice(sorted_indexes[get_class_start(closer_class, distance_classes) : closer_class], 1)[0]
 
-                        for farther_class in filter(lambda c: c > closer_class, distance_classes):
+                        for farther_class in filter(lambda c: c >= closer_class, distance_classes):
                             # Find the farther option for the triplet
                             farther_idx = np.random.choice(sorted_indexes[get_class_start(farther_class, distance_classes) : farther_class], 1)[0]
                             # Compute distance between options
