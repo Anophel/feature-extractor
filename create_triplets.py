@@ -22,6 +22,8 @@ class Triplet(NamedTuple):
     closer_distance: float
     farther_distance: float
     options_distance: float
+    closer_bin: int
+    farther_bin: int
     other_models_distances: dict
 
 def compute_single_cosine_distance(idx1: int, idx2: int, features: np.ndarray):
@@ -126,7 +128,7 @@ def main(args):
                     # Get sorted indexes for fast class selection
                     sorted_indexes = np.argsort(distances)
 
-                    for closer_class in distance_classes[:-1]:
+                    for closer_class in distance_classes:
                         # Find first closer option for the triplet
                         closer_idx = np.random.choice(sorted_indexes[get_class_start(closer_class, distance_classes) : closer_class], 1)[0]
 
@@ -139,7 +141,7 @@ def main(args):
                             # Save the created triplet with additional metadata
                             generated_triplets.append(Triplet(prefix, image_list[target_idx], image_list[closer_idx], 
                                 image_list[farther_idx], prefix, target_idx, closer_idx, farther_idx, distances[closer_idx], 
-                                distances[farther_idx], options_distance, {}))
+                                distances[farther_idx], options_distance, closer_class, farther_class, {}))
                             
                             # Increment counter
                             bar()
