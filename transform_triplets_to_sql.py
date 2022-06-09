@@ -29,6 +29,8 @@ def main(args):
         model_name = row["model"]
         option_one_path = row["closer_path"]
         option_two_path = row["farther_path"]
+        option_one_bin = row["closer_bin"]
+        option_two_bin = row["farther_bin"]
         model_favorite = 0
         deep_learning_favorite = 0 if row[f"{DEEP_LEARNING_MODEL}_closer"] < row[f"{DEEP_LEARNING_MODEL}_farther"] else 1
         color_favorite = 0 if row[f"{COLOR_MODEL}_closer"] < row[f"{COLOR_MODEL}_farther"] else 1
@@ -44,6 +46,9 @@ def main(args):
             deep_learning_favorite = (deep_learning_favorite + 1) % 2
             color_favorite = (color_favorite + 1) % 2
             vlad_favorite = (vlad_favorite + 1) % 2
+            tmp = option_one_bin
+            option_one_bin = option_two_bin
+            option_two_bin = tmp
 
         # Increment favorites to 1 and 2
         model_favorite += 1
@@ -53,8 +58,8 @@ def main(args):
 
         sqls.append( (f"insert into triplets values (nextval('default_sequence'), "
             f"'{target_path}', '{option_one_path}', '{option_two_path}', '{model_name}',"
-            f"{model_favorite}, {deep_learning_favorite}, {color_favorite}, {vlad_favorite}"
-            f");"
+            f"{model_favorite}, {deep_learning_favorite}, {color_favorite}, {vlad_favorite},"
+            f"{option_one_bin}, {option_two_bin});"
         ) )
     with open(args.output_file, 'w') as f:
         f.write("\n".join(sqls))
