@@ -54,7 +54,7 @@ def main(args):
     print("Preparing output")
     # Prepare output structure
     df_output = {"triplet_id": [], "target_index": [], "closed_index": [],
-                "farther_index": [], 
+                "farther_index": [], "model": [], "dist_measure": [],
                 "target_to_closer_rank": [], "target_to_farther_rank": [], 
                 "closer_to_target_rank": [], "closer_to_farther_rank": [], 
                 "farther_to_closer_rank": [], "farther_to_target_rank": []
@@ -78,6 +78,8 @@ def main(args):
         # For all models
         for model in models:
             features = np.load(os.path.join(args.models_path, model + ".npy"))
+            model_esc = model.replace(",", "_")
+
             # For all distance measures
             for dist_measure in DISTANCE_MEASURES.keys():
                 # For all triplets
@@ -92,6 +94,8 @@ def main(args):
                     farther_to_closer_rank, farther_to_target_rank = get_ranks(features, farther_index, closer_index, target_index)
 
                     df_output["triplet_id"].append(triplet_id)
+                    df_output["model"].append(model)
+                    df_output["dist_measure"].append(dist_measure)
                     df_output["target_index"].append(target_index)
                     df_output["closer_index"].append(closer_index)
                     df_output["farther_index"].append(farther_index)
