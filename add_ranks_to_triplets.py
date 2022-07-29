@@ -57,8 +57,8 @@ def main(args):
     df_output = {"triplet_id": [], "target_index": [], "closer_index": [],
                 "farther_index": [], "model": [], "dist_measure": [],
                 "target_to_closer_rank": [], "target_to_farther_rank": [], 
-                "closer_to_target_rank": [], "closer_to_farther_rank": [], 
-                "farther_to_closer_rank": [], "farther_to_target_rank": []
+                #"closer_to_target_rank": [], "closer_to_farther_rank": [], 
+                #"farther_to_closer_rank": [], "farther_to_target_rank": []
                 }
 
     dist_cache = {}
@@ -91,8 +91,8 @@ def main(args):
                     farther_index = row["farther_index"]
 
                     target_to_closer_rank, target_to_farther_rank = get_ranks(features, target_index, closer_index, farther_index)
-                    closer_to_target_rank, closer_to_farther_rank = get_ranks(features, closer_index, target_index, farther_index)
-                    farther_to_closer_rank, farther_to_target_rank = get_ranks(features, farther_index, closer_index, target_index)
+                    #closer_to_target_rank, closer_to_farther_rank = get_ranks(features, closer_index, target_index, farther_index)
+                    #farther_to_closer_rank, farther_to_target_rank = get_ranks(features, farther_index, closer_index, target_index)
 
                     df_output["triplet_id"].append(triplet_id)
                     df_output["model"].append(model)
@@ -102,10 +102,10 @@ def main(args):
                     df_output["farther_index"].append(farther_index)
                     df_output["target_to_closer_rank"].append(target_to_closer_rank)
                     df_output["target_to_farther_rank"].append(target_to_farther_rank)
-                    df_output["closer_to_target_rank"].append(closer_to_target_rank)
-                    df_output["closer_to_farther_rank"].append(closer_to_farther_rank)
-                    df_output["farther_to_closer_rank"].append(farther_to_closer_rank)
-                    df_output["farther_to_target_rank"].append(farther_to_target_rank)
+                    #df_output["closer_to_target_rank"].append(closer_to_target_rank)
+                    #df_output["closer_to_farther_rank"].append(closer_to_farther_rank)
+                    #df_output["farther_to_closer_rank"].append(farther_to_closer_rank)
+                    #df_output["farther_to_target_rank"].append(farther_to_target_rank)
 
                     bar()
 
