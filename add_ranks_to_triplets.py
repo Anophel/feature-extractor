@@ -85,7 +85,7 @@ def main(args):
             for dist_measure in DISTANCE_MEASURES.keys():
                 # For all triplets
                 for index, row in df.iterrows():
-                    triplet_id = row["triplet_id"]
+                    triplet_id = index
                     target_index = row["target_index"]
                     closer_index = row["closer_index"]
                     farther_index = row["farther_index"]
