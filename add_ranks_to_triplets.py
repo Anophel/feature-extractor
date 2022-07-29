@@ -102,6 +102,8 @@ def main(args):
                     df_output["farther_to_closer_rank"].append(farther_to_closer_rank)
                     df_output["farther_to_target_rank"].append(farther_to_target_rank)
 
+                    bar()
+
                 # Clear dist cache
                 dist_cache = {}
 
