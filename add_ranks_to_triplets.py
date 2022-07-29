@@ -95,7 +95,7 @@ def main(args):
                     #farther_to_closer_rank, farther_to_target_rank = get_ranks(features, farther_index, closer_index, target_index)
 
                     df_output["triplet_id"].append(triplet_id)
-                    df_output["model"].append(model)
+                    df_output["model"].append(model_esc)
                     df_output["dist_measure"].append(dist_measure)
                     df_output["target_index"].append(target_index)
                     df_output["closer_index"].append(closer_index)
