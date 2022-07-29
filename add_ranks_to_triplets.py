@@ -54,7 +54,7 @@ def main(args):
 
     print("Preparing output")
     # Prepare output structure
-    df_output = {"triplet_id": [], "target_index": [], "closed_index": [],
+    df_output = {"triplet_id": [], "target_index": [], "closer_index": [],
                 "farther_index": [], "model": [], "dist_measure": [],
                 "target_to_closer_rank": [], "target_to_farther_rank": [], 
                 "closer_to_target_rank": [], "closer_to_farther_rank": [], 
