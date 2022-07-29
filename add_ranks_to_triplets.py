@@ -49,7 +49,8 @@ def main(args):
     print("Checking model features")
     # Check model features presence
     for model in models:
-        assert os.path.isfile(os.path.join(args.models_path, model + ".npy")), f"Features for model {model} does not exist"
+        path = os.path.join(args.models_path, model + ".npy")
+        assert os.path.isfile(path), f"Features for model {model} does not exist. Path: {path}"
 
     print("Preparing output")
     # Prepare output structure
