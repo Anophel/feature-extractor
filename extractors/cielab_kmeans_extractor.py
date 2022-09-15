@@ -16,7 +16,7 @@ class CIELABKMeansExctractor(Extractor):
             rgb = io.imread(img_path)
             if len(rgb.shape) == 2:
                 rgb = color.gray2rgb(rgb)
-            elif len(rgb.shape) == 4:
+            elif rgb.shape[2] == 4:
                 rgb = color.rgba2rgb(rgb)
             
             lab = color.rgb2lab(rgb).reshape((-1, 3))

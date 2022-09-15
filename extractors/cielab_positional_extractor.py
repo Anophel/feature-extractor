@@ -45,10 +45,10 @@ class CIELABPositionalExctractor(Extractor):
             rgb = io.imread(img_path)
             if len(rgb.shape) == 2:
                 rgb = color.gray2rgb(rgb)
-            elif len(rgb.shape) == 4:
+            elif rgb.shape[2] == 4:
                 rgb = color.rgba2rgb(rgb)
             
-            rgb = transform.resize(rgb, (360, 640))
+            rgb = transform.resize(rgb, (320, 640))
             
             lab = color.rgb2lab(rgb)
             regions = [arr2 for arr in np.vsplit(lab, self.regions[0]) for arr2 in np.hsplit(arr, self.regions[1]) ]
