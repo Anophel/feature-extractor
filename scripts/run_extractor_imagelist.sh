@@ -9,6 +9,8 @@ DATADIR=/storage/plzen1/home/anopheles
 echo Scratch dir: $SCRATCHDIR
 echo Working dir: `pwd`
 
+mkdir $SCRATCHDIR/.cache
+
 IMAGELIST=#LST#
 BASEDIR=#EXT_ESCAPED#
 
@@ -37,4 +39,4 @@ mkdir $DATADIR/extracted_clean_features/$BASEDIR 2>/dev/null
 cp ./imagelist.txt ./output
 mv ./output/* $DATADIR/extracted_clean_features/$BASEDIR
 
-rm -rf *
+rm -rf * .cache

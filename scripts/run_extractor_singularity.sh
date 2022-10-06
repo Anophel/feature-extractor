@@ -1,3 +1,4 @@
+XDG_CACHE_HOME=/scratch/.cache
 pip install --no-cache-dir opencv-python-headless==4.5.5.62
 pip install --no-cache-dir torch==1.9.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 pip install --no-cache-dir matplotlib==3.3.4
