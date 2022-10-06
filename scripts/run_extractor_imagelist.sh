@@ -30,7 +30,7 @@ mkdir output
 
 sed -i $'s|#EXTRACT#|#EXTRACTOR#|g' ./feature-extractor/scripts/run_extractor_singularity.sh
 
-wget https://download.pytorch.org/whl/cu111/torch-1.9.0%2Bcu111-cp38-cp38-linux_x86_64.whl
+wget -q https://download.pytorch.org/whl/cu111/torch-1.9.0%2Bcu111-cp38-cp38-linux_x86_64.whl
 
 singularity run --bind $SCRATCHDIR:/scratch --nv /cvmfs/singularity.metacentrum.cz/NGC/TensorFlow\:22.04-tf2-py3.SIF /scratch/feature-extractor/scripts/run_extractor_singularity.sh
 
