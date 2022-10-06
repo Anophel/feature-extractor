@@ -1,3 +1,5 @@
+cd /scratch
+
 pip install --no-cache-dir opencv-python-headless==4.5.5.62
 pip install --no-cache-dir torch-1.9.0%2Bcu111-cp38-cp38-linux_x86_64.whl
 pip install --no-cache-dir matplotlib==3.3.4
@@ -10,7 +12,6 @@ pip install --no-cache-dir keras==2.6.0
 pip install --no-cache-dir Pillow==9.0.0
 pip install --no-cache-dir scikit_learn==1.0.2
 
-cd /scratch
 
 echo "GPU information:"
 nvidia-smi
