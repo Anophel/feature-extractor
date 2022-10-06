@@ -12,3 +12,5 @@ from .extractor import Extractor
 from .blurry_extractor import BlurryExtractor
 from .vlad_extractor import VLADExctractor
 from .rgb_histogram_extractor import RGBHistogramExtractor
+from .convnext_extractor import ConvNeXTExtractor
+from .van_extractor import VANExtractor
