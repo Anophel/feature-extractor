@@ -1,5 +1,5 @@
 pip install --no-cache-dir opencv-python-headless==4.5.5.62
-pip install --no-cache-dir torch==1.9.0
+pip install --no-cache-dir torch==1.9.0+cu113
 pip install --no-cache-dir matplotlib==3.3.4
 pip install --no-cache-dir alive_progress==2.2.0
 pip install --no-cache-dir transformers==4.22.0
