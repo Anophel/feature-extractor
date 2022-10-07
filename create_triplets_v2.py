@@ -123,6 +123,7 @@ def main(args):
             with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
                 image_list = np.array([line.rstrip() for line in f])
             features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
+            print(f"videos_list = {videos_list}")
             image_list, features = filter_image_list_and_features(image_list, features, videos_list)
             print(f"After filtering features.shape={features.shape}")
             
