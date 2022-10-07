@@ -51,7 +51,7 @@ def get_class_start(end, distance_classes):
 def filter_image_list_and_features(image_list, features, videos_list):
     if videos_list == None:
         return image_list, features
-    image_mask = list(map(lambda img: any(map(lambda video: video in img, videos_list))))
+    image_mask = list(map(lambda img: any(map(lambda video: video in img, videos_list)), image_list))
     return image_list[image_mask], features[image_mask]
 
 def main(args):
