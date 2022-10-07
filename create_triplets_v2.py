@@ -124,6 +124,7 @@ def main(args):
                 image_list = np.array([line.rstrip() for line in f])
             features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
             image_list, features = filter_image_list_and_features(image_list, features, videos_list)
+            print(f"After filtering features.shape={features.shape}")
             
             # Select distance measure
             for dist_measure in distance_measures:
