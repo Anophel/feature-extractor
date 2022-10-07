@@ -71,7 +71,7 @@ def main(args):
 
         with open(os.path.join(args.output_dir, prefix + ".txt"), "w") as f:
             for part in image_names_sorted:
-                f.write(part)
+                f.write(part + "\n")
         print(f"Merging {prefix} DONE")
         print("***")
             
