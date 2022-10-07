@@ -106,7 +106,7 @@ def main(args):
     print(f"Number of targets: {num_of_targets}")
 
     videos_list = None
-    if "videos_filter" in config and type(config["videos_filter"]) is str and not config["videos_filter"]:
+    if "videos_filter" in config and type(config["videos_filter"]) is str and config["videos_filter"] != "":
         assert os.path.exists(config["videos_filter"])
         with open(config["videos_filter"], "r") as f:
             videos_list = np.array([line.rstrip() for line in f])
