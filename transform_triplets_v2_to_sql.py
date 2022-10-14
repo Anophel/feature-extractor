@@ -10,6 +10,8 @@ parser.add_argument("-i", "--input_file", required=True, type=str,
                     help="Input csv file.")
 parser.add_argument("-o", "--output_file", required=True, type=str,
                     help="Output sql file.")
+parser.add_argument("-c", "--category", required=True, type=str,
+                    help="Category of the samples.")
 
 DEEP_LEARNING_MODEL = "W2VVExtractor_networks_path:.feature-extractor-models..batch_size:64__imagelist_jpg_part.txt_cosine_distance"
 COLOR_MODEL = "RGBHistogramExtractor_64__imagelist_jpg_part.txt_cosine_distance"
