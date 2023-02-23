@@ -11,6 +11,8 @@ parser.add_argument("-m", "--models_path", required=True, type=str,
                     help="Models base path")
 parser.add_argument("-o", "--output", required=True, type=str,
                     help="Output csv file")
+parser.add_argument("-mi", "--model_index", required=False, type=int,
+                    help="Index of model to evaluate", default=-1)
 
 MODEL_SUFFIX = "_cosine_distance_closer"
 
@@ -45,6 +47,8 @@ def main(args):
     df = pd.read_csv(args.triplets, delimiter=",")
     models = list(map(lambda col: col.replace(MODEL_SUFFIX, ""), 
             filter(lambda col: col.endswith(MODEL_SUFFIX), df.columns)))
+    if args.model_index != -1:
+        models = [models[args.model_index]]
 
     print("Checking model features")
     # Check model features presence
@@ -79,6 +83,8 @@ def main(args):
         # For all models
         for model in models:
             features = np.load(os.path.join(args.models_path, model + ".npy"))
+            # Norm features
+            features /= np.linalg.norm(features, axis=1)
             model_esc = model.replace(",", "_")
 
             # For all distance measures
