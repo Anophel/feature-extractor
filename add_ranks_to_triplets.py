@@ -20,7 +20,7 @@ def compute_single_cosine_distance(idx1: int, idx2: int, features: np.ndarray):
     return 1 - np.dot(features[idx1], features[idx2]) / (np.linalg.norm(features[idx1]) * np.linalg.norm(features[idx2]))
 
 def compute_cosine_distances(target_idx: int, features: np.ndarray):
-    return 1 - np.dot(features, features[target_idx]) / (np.linalg.norm(features, axis=1) * np.linalg.norm(features[target_idx]))
+    return 1 - np.dot(features, features[target_idx])
 
 def compute_single_euclidean_distance(idx1: int, idx2: int, features: np.ndarray):
     return np.sqrt(np.sum((features[idx1] - features[idx2]) ** 2))
@@ -30,7 +30,7 @@ def compute_euclidean_distances(target_idx: int, features: np.ndarray):
 
 DISTANCE_MEASURES = {
     "cosine_distance": (compute_cosine_distances, compute_single_cosine_distance), 
-    "euclidean_distance": (compute_euclidean_distances, compute_single_euclidean_distance),
+    #"euclidean_distance": (compute_euclidean_distances, compute_single_euclidean_distance),
 }
 
 def main(args):
@@ -84,7 +84,7 @@ def main(args):
         for model in models:
             features = np.load(os.path.join(args.models_path, model + ".npy"))
             # Norm features
-            features /= np.linalg.norm(features, axis=1)
+            features /= np.linalg.norm(features, axis=1)[:,np.newaxis]
             model_esc = model.replace(",", "_")
 
             # For all distance measures
