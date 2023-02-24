@@ -65,14 +65,14 @@ def main(args):
                 #"farther_to_closer_rank": [], "farther_to_target_rank": []
                 }
 
-    dist_cache = {}
+    #dist_cache = {}
 
     def get_ranks(features, target_index, index1, index2):
         # Cache results
-        if target_index not in dist_cache:
-            dist_cache[target_index] = DISTANCE_MEASURES[dist_measure][0](target_index, features)
+        #if target_index not in dist_cache:
+        #    dist_cache[target_index] = DISTANCE_MEASURES[dist_measure][0](target_index, features)
 
-        distances = dist_cache[target_index]
+        distances = DISTANCE_MEASURES[dist_measure][0](target_index, features)#dist_cache[target_index]
         rank1 = np.sum(distances < distances[index1])
         rank2 = np.sum(distances < distances[index2])
         return rank1, rank2
@@ -116,7 +116,7 @@ def main(args):
                     bar()
 
                     # Clear dist cache
-                    dist_cache = {}
+                    #dist_cache = {}
 
     print("Computation done, saving output...")
     df_output = pd.DataFrame(df_output)
