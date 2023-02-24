@@ -115,8 +115,8 @@ def main(args):
 
                     bar()
 
-                # Clear dist cache
-                dist_cache = {}
+                    # Clear dist cache
+                    dist_cache = {}
 
     print("Computation done, saving output...")
     df_output = pd.DataFrame(df_output)
