@@ -94,7 +94,7 @@ def main(args):
     regex = re.compile(r"^(.*).txt$")
     for path in os.listdir(input_dir):
         if os.path.isfile(os.path.join(input_dir, path)) and path.endswith(".txt"):
-            prefix = regex.sub("\\1", path).replace(",", "_")
+            prefix = regex.sub("\\1", path)
             prefixes.add(prefix)
 
     print(f"Loaded {len(prefixes)} prefixes")
@@ -132,6 +132,7 @@ def main(args):
 
     with alive_bar(len(generated_triplets) * len(prefixes) * len(distance_measures)) as bar:
         for prefix in prefixes:
+            prefix_safe = prefix.replace(",", "_")
             # Load model details
             with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
                 image_list = np.array([line.rstrip() for line in f])
@@ -146,9 +147,9 @@ def main(args):
                     farther_distance = DISTANCE_MEASURES[dist_measure][1](triplet.target_index, triplet.farther_index, features)
                     options_distance = DISTANCE_MEASURES[dist_measure][1](triplet.closer_index, triplet.farther_index, features)
 
-                    triplet.other_models_distances[f"{prefix}_{dist_measure}_closer"] = closer_distance
-                    triplet.other_models_distances[f"{prefix}_{dist_measure}_farther"] = farther_distance
-                    triplet.other_models_distances[f"{prefix}_{dist_measure}_options"] = options_distance
+                    triplet.other_models_distances[f"{prefix_safe}_{dist_measure}_closer"] = closer_distance
+                    triplet.other_models_distances[f"{prefix_safe}_{dist_measure}_farther"] = farther_distance
+                    triplet.other_models_distances[f"{prefix_safe}_{dist_measure}_options"] = options_distance
 
                     # Increment counter
                     bar()
