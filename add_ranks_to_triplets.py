@@ -50,6 +50,15 @@ def main(args):
     open(args.output, 'w').close()
     assert os.path.exists(args.output)
 
+    videos_list = None
+    if args.video_list is not None:
+        assert os.path.exists(args.video_list)
+        with open(args.video_list, "r") as f:
+            videos_list = [line.rstrip() for line in f]
+        print(f"Loaded videos_filter {args.video_list}")
+    else:
+        print("Skipping videos_filter")
+
     print("Loading triplets")
     # Load source data
     df = pd.read_csv(args.triplets, delimiter=",")
@@ -91,6 +100,9 @@ def main(args):
         # For all models
         for model in models:
             features = np.load(os.path.join(args.models_path, model + ".npy"))
+            with open(os.path.join(args.models_path, f"{model}.txt"), "r") as f:
+                image_list = np.array([line.rstrip() for line in f])
+            
             # Norm features
             features /= np.linalg.norm(features, axis=1)[:,np.newaxis]
             model_esc = model.replace(",", "_")
@@ -100,9 +112,10 @@ def main(args):
                 # For all triplets
                 for index, row in df.iterrows():
                     triplet_id = index
-                    target_index = row["target_index"]
-                    closer_index = row["closer_index"]
-                    farther_index = row["farther_index"]
+                    target_index = np.where(image_list == row["target_path"])[0][0]
+                    closer_index = np.where(image_list == row["closer_path"])[0][0]
+                    farther_index = np.where(image_list == row["farther_path"])[0][0]
+                    
 
                     target_to_closer_rank, target_to_farther_rank = get_ranks(features, target_index, closer_index, farther_index)
                     #closer_to_target_rank, closer_to_farther_rank = get_ranks(features, closer_index, target_index, farther_index)

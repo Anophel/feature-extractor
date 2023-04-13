@@ -94,7 +94,7 @@ def main(args):
     regex = re.compile(r"^(.*).txt$")
     for path in os.listdir(input_dir):
         if os.path.isfile(os.path.join(input_dir, path)) and path.endswith(".txt"):
-            prefix = regex.sub("\\1", path)
+            prefix = regex.sub("\\1", path).replace(",", "_")
             prefixes.add(prefix)
 
     print(f"Loaded {len(prefixes)} prefixes")
