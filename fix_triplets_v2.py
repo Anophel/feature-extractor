@@ -3,6 +3,7 @@ import argparse
 import os
 import re
 import yaml
+import pandas as pd
 from alive_progress import alive_bar
 from typing import NamedTuple
 
@@ -69,9 +70,8 @@ def main(args):
     assert os.path.isdir(input_dir)
 
     output_file = config["output_file"]
-    assert not os.path.isfile(output_file)
-    with open(output_file, mode='a'): pass
     assert os.path.isfile(output_file)
+    df_triplets = pd.read_csv(output_file)
 
     num_of_targets = int(config["targets"])
     assert num_of_targets > 0 and num_of_targets < 10000
@@ -115,57 +115,17 @@ def main(args):
         print("Skipping videos_filter")
         
 
-    print("Creating triplets")
+    print("Loading triplets")
 
     generated_triplets = []
 
-    with alive_bar(len(prefixes) * len(distance_measures) * 
-        int(len(distance_classes) * ((len(distance_classes) + 1) / 2)) * num_of_targets) as bar:
-        for prefix in prefixes:
-            # Load model details
-            with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
-                image_list = np.array([line.rstrip() for line in f])
-            features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
-            image_list, features = filter_image_list_and_features(image_list, features, videos_list)
-            print(f"After filtering features.shape={features.shape}")
-            
-            # Select distance measure
-            for dist_measure in distance_measures:
-                # Crete triplets for each target
-                for target_iteration in range(num_of_targets):
-                    for closer_class in distance_classes:
-                        for farther_class in filter(lambda c: c >= closer_class, distance_classes):
-                            # For every triplet get new target
-                            target_idx = np.random.randint(0, features.shape[0])
-
-                            # Computed all distances for the target
-                            distances = DISTANCE_MEASURES[dist_measure][0](target_idx, features)
-                            # Get sorted indexes for fast class selection
-                            sorted_indexes = np.argsort(distances)
-
-                            # Find first closer option for the triplet
-                            closer_idx = np.random.choice(sorted_indexes[get_class_start(closer_class, distance_classes) : closer_class], 1)[0]
-
-                            # Find the farther option for the triplet
-                            farther_idx = np.random.choice(sorted_indexes[get_class_start(farther_class, distance_classes) : farther_class], 2, replace=False)
-
-                            # Fix getting same options
-                            if farther_idx[0] != closer_idx:
-                                farther_idx = farther_idx[0]
-                            else:
-                                farther_idx = farther_idx[1]
-
-                            # Compute distance between options
-                            options_distance = DISTANCE_MEASURES[dist_measure][1](closer_idx, farther_idx, features)
-
-                            # Save the created triplet with additional metadata
-                            generated_triplets.append(Triplet(prefix, image_list[target_idx], image_list[closer_idx], 
-                                image_list[farther_idx], prefix, target_idx, closer_idx, farther_idx, distances[closer_idx], 
-                                distances[farther_idx], options_distance, np.where(sorted_indexes == closer_idx)[0][0], 
-                                np.where(sorted_indexes == farther_idx)[0][0], closer_class, farther_class, {}))
-                            
-                            # Increment counter
-                            bar()
+    with alive_bar(df_triplets.shape[0]) as bar:
+        for index, row in df_triplets.iterrows():
+            generated_triplets.append(Triplet(row["model"], row["target_path"], row["closer_path"], 
+                                    row["farther_path"], row["model_prefix"], row["target_index"], row["closer_index"], 
+                                    row["farther_index"], row["closer_distance"], row["farther_distance"], row["closer_rank"], 
+                                    row["farther_rank"], row["options_distance"], row["closer_bin"], row["farther_bin"], {}))
+            bar()
     
     print("Triplets DONE")
     print("Computing additional model metrics")
@@ -173,7 +133,11 @@ def main(args):
     with alive_bar(len(generated_triplets) * len(prefixes) * len(distance_measures)) as bar:
         for prefix in prefixes:
             # Load model details
+            with open(os.path.join(input_dir, f"{prefix}.txt"), "r") as f:
+                image_list = np.array([line.rstrip() for line in f])
             features = np.load(os.path.join(input_dir, f"{prefix}.npy"))
+            image_list, features = filter_image_list_and_features(image_list, features, videos_list)
+            print(f"After filtering features.shape={features.shape}")
 
             for triplet in generated_triplets:
                 for dist_measure in distance_measures:
@@ -193,7 +157,7 @@ def main(args):
     header = list(filter(lambda col: col != "other_models_distances", Triplet._fields))
     other_models_header = list(generated_triplets[0].other_models_distances.keys())
 
-    with open(output_file, 'w') as f:
+    with open(output_file + ".fixed.csv", 'w') as f:
         # Write header
         first = True
         for col in header:
