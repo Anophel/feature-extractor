@@ -13,6 +13,8 @@ parser.add_argument("-o", "--output", required=True, type=str,
                     help="Output csv file")
 parser.add_argument("-mi", "--model_index", required=False, type=int,
                     help="Index of model to evaluate", default=-1)
+parser.add_argument("-vl", "--video_list", required=False, default=None, type=str,
+                    help="Output csv file")
 
 MODEL_SUFFIX = "_cosine_distance_closer"
 
@@ -32,6 +34,12 @@ DISTANCE_MEASURES = {
     "cosine_distance": (compute_cosine_distances, compute_single_cosine_distance), 
     #"euclidean_distance": (compute_euclidean_distances, compute_single_euclidean_distance),
 }
+
+def filter_image_list_and_features(image_list, features, videos_list):
+    if videos_list == None:
+        return image_list, features
+    image_mask = list(map(lambda img: any(map(lambda video: video in img, videos_list)), image_list))
+    return image_list[image_mask], features[image_mask]
 
 def main(args):
     print("Checking parameters")

@@ -121,7 +121,7 @@ def main(args):
 
     with alive_bar(df_triplets.shape[0]) as bar:
         for index, row in df_triplets.iterrows():
-            generated_triplets.append(Triplet(row["model"], row["target_path"], row["closer_path"], 
+            generated_triplets.append(Triplet(row["model"].replace(",", "_"), row["target_path"], row["closer_path"], 
                                     row["farther_path"], row["model_prefix"], row["target_index"], row["closer_index"], 
                                     row["farther_index"], row["closer_distance"], row["farther_distance"], row["closer_rank"], 
                                     row["farther_rank"], row["options_distance"], row["closer_bin"], row["farther_bin"], {}))
