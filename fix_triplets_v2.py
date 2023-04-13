@@ -123,8 +123,8 @@ def main(args):
         for index, row in df_triplets.iterrows():
             generated_triplets.append(Triplet(row["model"].replace(".,b", "..b").replace(",", "_"), row["target_path"], row["closer_path"], 
                                     row["farther_path"], row["model_prefix"], row["target_index"], row["closer_index"], 
-                                    row["farther_index"], row["closer_distance"], row["farther_distance"], row["closer_rank"], 
-                                    row["farther_rank"], row["options_distance"], row["closer_bin"], row["farther_bin"], {}))
+                                    row["farther_index"], row["closer_distance"], row["farther_distance"], row["farther_rank"], 
+                                    row["options_distance"], row["closer_rank"], row["closer_bin"], row["farther_bin"], {}))
             bar()
     
     print("Triplets DONE")
