@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>extractors package &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fix_triplets_v2 module" href="fix_triplets_v2.html" />
+    <link rel="prev" title="extract_images module" href="extract_images.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">image_similarity</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html">VLAD_create_dictionary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html">add_ranks_to_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html">create_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html">create_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_blur_only.html">extract_blur_only module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html">extract_images module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">extractors package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.batch_extractor">extractors.batch_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.batch_extractor.BatchExtractor"><code class="docutils literal notranslate"><span class="pre">BatchExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.blurry_extractor">extractors.blurry_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.blurry_extractor.BlurryExtractor"><code class="docutils literal notranslate"><span class="pre">BlurryExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.cielab_kmeans_extractor">extractors.cielab_kmeans_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor"><code class="docutils literal notranslate"><span class="pre">CIELABKMeansExctractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.cielab_positional_extractor">extractors.cielab_positional_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.clip_extractor">extractors.clip_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.clip_extractor.CLIPExtractor"><code class="docutils literal notranslate"><span class="pre">CLIPExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.convnext_extractor">extractors.convnext_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.convnext_extractor.ConvNeXTExtractor"><code class="docutils literal notranslate"><span class="pre">ConvNeXTExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.efficientnet_extractor">extractors.efficientnet_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.efficientnet_extractor.EfficientNetExtractor"><code class="docutils literal notranslate"><span class="pre">EfficientNetExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.extractor">extractors.extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.extractor.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.image_gpt_extractor">extractors.image_gpt_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.image_gpt_extractor.ImageGPTExtractor"><code class="docutils literal notranslate"><span class="pre">ImageGPTExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.resnet_extractor">extractors.resnet_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.resnet_extractor.ResNetExtractor"><code class="docutils literal notranslate"><span class="pre">ResNetExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.resnetv2_extractor">extractors.resnetv2_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.resnetv2_extractor.ResNetV2Extractor"><code class="docutils literal notranslate"><span class="pre">ResNetV2Extractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.rgb_histogram_extractor">extractors.rgb_histogram_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.rgb_histogram_extractor.RGBHistogramExtractor"><code class="docutils literal notranslate"><span class="pre">RGBHistogramExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.van_extractor">extractors.van_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.van_extractor.VANExtractor"><code class="docutils literal notranslate"><span class="pre">VANExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.vit_extractor">extractors.vit_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.vit_extractor.ViTExtractor"><code class="docutils literal notranslate"><span class="pre">ViTExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.vlad_extractor">extractors.vlad_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.vlad_extractor.VLADExctractor"><code class="docutils literal notranslate"><span class="pre">VLADExctractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors.w2vv_extractor">extractors.w2vv_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#extractors.w2vv_extractor.W2VVExtractor"><code class="docutils literal notranslate"><span class="pre">W2VVExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-extractors">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html">fix_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html">manipulators package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge_batches.html">merge_batches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_to_sql.html">transform_triplets_to_sql module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_v2_to_sql.html">transform_triplets_v2_to_sql module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">image_similarity</a></li>
+      <li class="breadcrumb-item active">extractors package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/extractors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="extractors-package">
+<h1>extractors package<a class="headerlink" href="#extractors-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-extractors.batch_extractor">
+<span id="extractors-batch-extractor-module"></span><h2>extractors.batch_extractor module<a class="headerlink" href="#module-extractors.batch_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.batch_extractor.BatchExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.batch_extractor.</span></span><span class="sig-name descname"><span class="pre">BatchExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extractor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><span class="pre">Extractor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/batch_extractor.html#BatchExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.batch_extractor.BatchExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Helper extractor wrapper to process feature extraction per batches becuase    most of the extractors process the given images in one batch.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.batch_extractor.BatchExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/batch_extractor.html#BatchExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.batch_extractor.BatchExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.batch_extractor.BatchExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extractor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><span class="pre">Extractor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/batch_extractor.html#BatchExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.batch_extractor.BatchExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size</p></li>
+<li><p><strong>extractor</strong> (<a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><em>Extractor</em></a>) – Inner extractor</p></li>
+<li><p><strong>show_progress</strong> (<em>bool</em>) – Flag if the progress should be shown</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.batch_extractor.BatchExtractor.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">BatchExtractor.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/batch_extractor.html#BatchExtractor.extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.batch_extractor.BatchExtractor.extract" title="Permalink to this definition"></a></dt>
+<dd><p>Inner method for running the extraction with a custom callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.batch_extractor.BatchExtractor.extract_with_progress">
+<span class="sig-name descname"><span class="pre">extract_with_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/batch_extractor.html#BatchExtractor.extract_with_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.batch_extractor.BatchExtractor.extract_with_progress" title="Permalink to this definition"></a></dt>
+<dd><p>Inner method for running the extraction with the progress.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.blurry_extractor">
+<span id="extractors-blurry-extractor-module"></span><h2>extractors.blurry_extractor module<a class="headerlink" href="#module-extractors.blurry_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.blurry_extractor.BlurryExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.blurry_extractor.</span></span><span class="sig-name descname"><span class="pre">BlurryExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/blurry_extractor.html#BlurryExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.blurry_extractor.BlurryExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Blurry extractor that produce a single float value for each image.
+The graeter the value the less blurry the image is.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.blurry_extractor.BlurryExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/blurry_extractor.html#BlurryExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.blurry_extractor.BlurryExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.cielab_kmeans_extractor">
+<span id="extractors-cielab-kmeans-extractor-module"></span><h2>extractors.cielab_kmeans_extractor module<a class="headerlink" href="#module-extractors.cielab_kmeans_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.cielab_kmeans_extractor.CIELABKMeansExctractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.cielab_kmeans_extractor.</span></span><span class="sig-name descname"><span class="pre">CIELABKMeansExctractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/cielab_kmeans_extractor.html#CIELABKMeansExctractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that converts the image pixels into CIELAB colour space
+and then computes KMean on these values. The k parameter for KMeans
+is selected in constructor. Final feature vector are concatenated
+CIELAB values from the KMeans centroids ordered by their hue.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/cielab_kmeans_extractor.html#CIELABKMeansExctractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/cielab_kmeans_extractor.html#CIELABKMeansExctractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<em>int</em>) – Parameter k for KMeans.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.cielab_positional_extractor">
+<span id="extractors-cielab-positional-extractor-module"></span><h2>extractors.cielab_positional_extractor module<a class="headerlink" href="#module-extractors.cielab_positional_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.cielab_positional_extractor.</span></span><span class="sig-name descname"><span class="pre">CIELABPositionalExctractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(4,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approx_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that converts the image pixels into CIELAB colour space
+and then computes an aggregated pixel value for each sector of an image.
+The aggregation can be computed as a mean, a medoid, or an approximative medoid.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(4,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approx_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regions</strong> (<em>tuple</em>) – Number of regions that should be used. (rows, columns)</p></li>
+<li><p><strong>aggType</strong> (<em>str</em>) – Region aggregation type. Possible values: “mean”, “medoid”, “medoid-approx”.</p></li>
+<li><p><strong>approx_sample</strong> (<em>int</em>) – Sample size for approximative medoid. Used only when <code class="docutils literal notranslate"><span class="pre">aggType</span> <span class="pre">==</span> <span class="pre">&quot;medoid-approx&quot;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_approx_medoid">
+<span class="sig-name descname"><span class="pre">compute_approx_medoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor.compute_approx_medoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_approx_medoid" title="Permalink to this definition"></a></dt>
+<dd><p>Computed approximative medoid for the region pixel values.
+The region is subsampled and then the medoid is computed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>region</strong> (<em>np.ndarray</em>) – Region pixel values</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Approximative medoid for the region.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_mean">
+<span class="sig-name descname"><span class="pre">compute_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor.compute_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Computed mean for the region pixel values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>region</strong> (<em>np.ndarray</em>) – Region pixel values</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean for the region.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_medoid">
+<span class="sig-name descname"><span class="pre">compute_medoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/cielab_positional_extractor.html#CIELABPositionalExctractor.compute_medoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_medoid" title="Permalink to this definition"></a></dt>
+<dd><p>Computed medoid for the region pixel values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>region</strong> (<em>np.ndarray</em>) – Region pixel values</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Medoid for the region.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.clip_extractor">
+<span id="extractors-clip-extractor-module"></span><h2>extractors.clip_extractor module<a class="headerlink" href="#module-extractors.clip_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.clip_extractor.CLIPExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.clip_extractor.</span></span><span class="sig-name descname"><span class="pre">CLIPExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'small'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/clip_extractor.html#CLIPExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.clip_extractor.CLIPExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through CLIP.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.clip_extractor.CLIPExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/clip_extractor.html#CLIPExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.clip_extractor.CLIPExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.clip_extractor.CLIPExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'small'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/clip_extractor.html#CLIPExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.clip_extractor.CLIPExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “small”, “medium”, “large”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.convnext_extractor">
+<span id="extractors-convnext-extractor-module"></span><h2>extractors.convnext_extractor module<a class="headerlink" href="#module-extractors.convnext_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.convnext_extractor.ConvNeXTExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.convnext_extractor.</span></span><span class="sig-name descname"><span class="pre">ConvNeXTExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/convnext_extractor.html#ConvNeXTExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.convnext_extractor.ConvNeXTExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through ConvNeXT.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.convnext_extractor.ConvNeXTExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/convnext_extractor.html#ConvNeXTExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.convnext_extractor.ConvNeXTExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.convnext_extractor.ConvNeXTExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/convnext_extractor.html#ConvNeXTExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.convnext_extractor.ConvNeXTExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “tiny”, “small”, “base”, “large”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.efficientnet_extractor">
+<span id="extractors-efficientnet-extractor-module"></span><h2>extractors.efficientnet_extractor module<a class="headerlink" href="#module-extractors.efficientnet_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.efficientnet_extractor.EfficientNetExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.efficientnet_extractor.</span></span><span class="sig-name descname"><span class="pre">EfficientNetExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/efficientnet_extractor.html#EfficientNetExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.efficientnet_extractor.EfficientNetExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through EfficientNet.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.efficientnet_extractor.EfficientNetExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/efficientnet_extractor.html#EfficientNetExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.efficientnet_extractor.EfficientNetExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.efficientnet_extractor.EfficientNetExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/efficientnet_extractor.html#EfficientNetExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.efficientnet_extractor.EfficientNetExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “0”, “1”, “2”, “3”, “4”, “5”, “6”, “7”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.extractor">
+<span id="extractors-extractor-module"></span><h2>extractors.extractor module<a class="headerlink" href="#module-extractors.extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.extractor.Extractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.extractor.</span></span><span class="sig-name descname"><span class="pre">Extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/extractor.html#Extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.extractor.Extractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for all the extractors. Defines the interface for the image feature extraction    and human readable name of the extractor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.extractor.Extractor.__call__">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/extractor.html#Extractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.extractor.Extractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.extractor.Extractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/extractor.html#Extractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.extractor.Extractor.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.image_gpt_extractor">
+<span id="extractors-image-gpt-extractor-module"></span><h2>extractors.image_gpt_extractor module<a class="headerlink" href="#module-extractors.image_gpt_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.image_gpt_extractor.ImageGPTExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.image_gpt_extractor.</span></span><span class="sig-name descname"><span class="pre">ImageGPTExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'small'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/image_gpt_extractor.html#ImageGPTExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.image_gpt_extractor.ImageGPTExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through ImageGTP.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.image_gpt_extractor.ImageGPTExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/image_gpt_extractor.html#ImageGPTExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.image_gpt_extractor.ImageGPTExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.image_gpt_extractor.ImageGPTExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'small'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/image_gpt_extractor.html#ImageGPTExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.image_gpt_extractor.ImageGPTExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “small”, “medium”, “large”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.resnet_extractor">
+<span id="extractors-resnet-extractor-module"></span><h2>extractors.resnet_extractor module<a class="headerlink" href="#module-extractors.resnet_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.resnet_extractor.ResNetExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.resnet_extractor.</span></span><span class="sig-name descname"><span class="pre">ResNetExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'50'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/resnet_extractor.html#ResNetExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnet_extractor.ResNetExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through ResNet.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.resnet_extractor.ResNetExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/resnet_extractor.html#ResNetExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnet_extractor.ResNetExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.resnet_extractor.ResNetExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'50'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/resnet_extractor.html#ResNetExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnet_extractor.ResNetExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “50”, “101”, “152”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.resnetv2_extractor">
+<span id="extractors-resnetv2-extractor-module"></span><h2>extractors.resnetv2_extractor module<a class="headerlink" href="#module-extractors.resnetv2_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.resnetv2_extractor.ResNetV2Extractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.resnetv2_extractor.</span></span><span class="sig-name descname"><span class="pre">ResNetV2Extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'50'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/resnetv2_extractor.html#ResNetV2Extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnetv2_extractor.ResNetV2Extractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through ResNetV2.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.resnetv2_extractor.ResNetV2Extractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/resnetv2_extractor.html#ResNetV2Extractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnetv2_extractor.ResNetV2Extractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.resnetv2_extractor.ResNetV2Extractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'50'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/resnetv2_extractor.html#ResNetV2Extractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.resnetv2_extractor.ResNetV2Extractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “50”, “101”, “152”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.rgb_histogram_extractor">
+<span id="extractors-rgb-histogram-extractor-module"></span><h2>extractors.rgb_histogram_extractor module<a class="headerlink" href="#module-extractors.rgb_histogram_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.rgb_histogram_extractor.RGBHistogramExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.rgb_histogram_extractor.</span></span><span class="sig-name descname"><span class="pre">RGBHistogramExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/rgb_histogram_extractor.html#RGBHistogramExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.rgb_histogram_extractor.RGBHistogramExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that computes RGB histogram from the input images.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.rgb_histogram_extractor.RGBHistogramExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/rgb_histogram_extractor.html#RGBHistogramExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.rgb_histogram_extractor.RGBHistogramExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.rgb_histogram_extractor.RGBHistogramExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/rgb_histogram_extractor.html#RGBHistogramExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.rgb_histogram_extractor.RGBHistogramExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bins</strong> (<em>int</em>) – Number of bins of the output histograms per colour channel. Should satisfy 1 &lt;= bins &lt;= 256.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.van_extractor">
+<span id="extractors-van-extractor-module"></span><h2>extractors.van_extractor module<a class="headerlink" href="#module-extractors.van_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.van_extractor.VANExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.van_extractor.</span></span><span class="sig-name descname"><span class="pre">VANExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/van_extractor.html#VANExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.van_extractor.VANExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through VAN.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.van_extractor.VANExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/van_extractor.html#VANExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.van_extractor.VANExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.van_extractor.VANExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/van_extractor.html#VANExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.van_extractor.VANExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “tiny”, “small”, “base”, “large”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.vit_extractor">
+<span id="extractors-vit-extractor-module"></span><h2>extractors.vit_extractor module<a class="headerlink" href="#module-extractors.vit_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.vit_extractor.ViTExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.vit_extractor.</span></span><span class="sig-name descname"><span class="pre">ViTExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/vit_extractor.html#ViTExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vit_extractor.ViTExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through ViT.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.vit_extractor.ViTExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/vit_extractor.html#ViTExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vit_extractor.ViTExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.vit_extractor.ViTExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'base'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/vit_extractor.html#ViTExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vit_extractor.ViTExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>str</em>) – Size of the neural network. Possible values: “base”, “large”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.vlad_extractor">
+<span id="extractors-vlad-extractor-module"></span><h2>extractors.vlad_extractor module<a class="headerlink" href="#module-extractors.vlad_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.vlad_extractor.VLADExctractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.vlad_extractor.</span></span><span class="sig-name descname"><span class="pre">VLADExctractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'models/VLAD_dict_64.npy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/vlad_extractor.html#VLADExctractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vlad_extractor.VLADExctractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that computes VLAD feature vectors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.vlad_extractor.VLADExctractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/vlad_extractor.html#VLADExctractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vlad_extractor.VLADExctractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.vlad_extractor.VLADExctractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'models/VLAD_dict_64.npy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/vlad_extractor.html#VLADExctractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.vlad_extractor.VLADExctractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dictionary_path</strong> (<em>str</em>) – Path to the saved VLAD dictionary.</p></li>
+<li><p><strong>alpha</strong> (<em>int</em>) – Alpha parameter for the power-law normalization.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors.w2vv_extractor">
+<span id="extractors-w2vv-extractor-module"></span><h2>extractors.w2vv_extractor module<a class="headerlink" href="#module-extractors.w2vv_extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="extractors.w2vv_extractor.W2VVExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">extractors.w2vv_extractor.</span></span><span class="sig-name descname"><span class="pre">W2VVExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">networks_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'models'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/w2vv_extractor.html#W2VVExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.w2vv_extractor.W2VVExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#extractors.extractor.Extractor" title="extractors.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>Extractor that feeds forward the images through W2VV++.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.w2vv_extractor.W2VVExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/extractors/w2vv_extractor.html#W2VVExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.w2vv_extractor.W2VVExtractor.__call__" title="Permalink to this definition"></a></dt>
+<dd><p>Extraction method. It takes list of image paths and return feature matrix as a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_paths</strong> (<em>list</em>) – Image paths</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.w2vv_extractor.W2VVExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">networks_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'models'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/extractors/w2vv_extractor.html#W2VVExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.w2vv_extractor.W2VVExtractor.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Constructor method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>networks_path</strong> (<em>str</em>) – Path to the model saved weights.</p></li>
+<li><p><strong>use_gpu</strong> (<em>bool</em>) – Flag to use a gpu. Should be False if no GPU is present.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="extractors.w2vv_extractor.W2VVExtractor.loadModel">
+<span class="sig-name descname"><span class="pre">loadModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extractors/w2vv_extractor.html#W2VVExtractor.loadModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extractors.w2vv_extractor.W2VVExtractor.loadModel" title="Permalink to this definition"></a></dt>
+<dd><p>Loads saved MXNet model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>network_path</strong> (<em>str</em>) – Path to the save network.</p></li>
+<li><p><strong>network_epoch</strong> (<em>int</em>) – Epoch of the saved model.</p></li>
+<li><p><strong>use_gpu</strong> (<em>bool</em>) – Flag to use a gpu. Should be False if no GPU is present.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>MXNet network.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mx.mod.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-extractors">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-extractors" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="extract_images.html" class="btn btn-neutral float-left" title="extract_images module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fix_triplets_v2.html" class="btn btn-neutral float-right" title="fix_triplets_v2 module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

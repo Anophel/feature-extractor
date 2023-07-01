@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>manipulators.dataset &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">image_similarity</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">manipulators.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for manipulators.dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
+
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for exploring and manipulating with the given dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagelist_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">features_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">media_server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">media_server_auth</span><span class="p">:</span> <span class="n">HTTPBasicAuth</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method</span>
+
+<span class="sd">        :param str imagelist_path: Path to the image list.</span>
+<span class="sd">        :param str features_path: Path to the feature matrix.</span>
+<span class="sd">        :param str media_server: URL of the media server. Images will be read from the local disk if None.</span>
+<span class="sd">        :param HTTPBasicAuth media_server_auth: Basic authentication for the media server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+            <span class="n">imagelist_path</span><span class="p">),</span> <span class="s2">&quot;Incorrect imagelist_path. The file does not exist!&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+            <span class="n">features_path</span><span class="p">),</span> <span class="s2">&quot;Incorrect features_path. The file does not exist!&quot;</span>
+
+        <span class="c1"># Media server endpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_media_server</span> <span class="o">=</span> <span class="n">media_server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_media_server_auth</span> <span class="o">=</span> <span class="n">media_server_auth</span>
+
+        <span class="c1"># Load paths to images</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">imagelist_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_full_image_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span>
+        
+        <span class="c1"># Load numpy features</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">features_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">,</span>
+                                             <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Sanity check</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+                <span class="n">self_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_similarity</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">self_sim</span> <span class="o">&gt;</span> <span class="mf">0.9</span> <span class="ow">and</span> <span class="n">self_sim</span> <span class="o">&lt;</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s2">&quot;Self similarity should be 1.0&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_full_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> 
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Different size of imagelist and features! Check if they match!!&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask_history</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="Dataset.get_image"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BytesIO</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Loads image in binary format from</span>
+<span class="sd">        the appropriate storage based on the</span>
+<span class="sd">        index provided.features_path</span>
+
+<span class="sd">        :param int target: Path to an image.</span>
+
+<span class="sd">        :returns: Binary representation of the image.</span>
+
+<span class="sd">        :rtype: BytesIO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_media_server</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_media_server</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s1">&#39;som&#39;</span><span class="p">,</span> <span class="s1">&#39;hunter&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.show"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Shows the image based on the index</span>
+<span class="sd">        provided.</span>
+
+<span class="sd">        :param int target: Image index to show</span>
+<span class="sd">        :param Axes ax: Axes from matplotlib to use for show. Will use base package if None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Dataset.show_grid"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.show_grid">[docs]</a>    <span class="k">def</span> <span class="nf">show_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">title_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Shows multiple images from the ids iterable. </span>
+<span class="sd">        Additionally the title callback can be specified</span>
+<span class="sd">        to generate custom titles per image.</span>
+
+<span class="sd">        :param Iterable ids: Ids of images to show in grid</span>
+<span class="sd">        :param Callable[[int, int], str] title_callback: Callback which will be called when mapping the title.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">//</span> <span class="mi">10</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">neigh</span><span class="p">,</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">axes</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">],</span> <span class="n">ids</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_callback</span><span class="p">(</span><span class="n">neigh</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">neigh</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">axes</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">][</span><span class="n">offset</span><span class="p">:]:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_feature_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Finds the feature vector for the target.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+
+<span class="sd">        :returns: Target image features.</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Target has to be vector&quot;</span>
+            <span class="k">assert</span> <span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;Target and dataset features has to have the same dimension&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">target</span>
+
+<div class="viewcode-block" id="Dataset.get_similarity"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.get_similarity">[docs]</a>    <span class="k">def</span> <span class="nf">get_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Computes similarity between given target and</span>
+<span class="sd">        other image in the dataset. The target can be an</span>
+<span class="sd">        identificator from the dataset or a feature vector.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param int other: Image index</span>
+
+<span class="sd">        :returns: Similarity score vector.</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_vector</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">[</span><span class="n">other</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Dataset.get_knn"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.get_knn">[docs]</a>    <span class="k">def</span> <span class="nf">get_knn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns ids to the nearest neighbours</span>
+<span class="sd">        from the target query. The target can be</span>
+<span class="sd">        an id from the dataset or a feature vector.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param int k: Number of nearest neighbours</span>
+
+<span class="sd">        :returns: Indexes of the nearest neighbours.</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_vector</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">k</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Dataset.show_knn"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.show_knn">[docs]</a>    <span class="k">def</span> <span class="nf">show_knn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Shows images from the nearest neighbourhood</span>
+<span class="sd">        of the target. The target can be an id from the</span>
+<span class="sd">        dataset or an external feature vector.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param int k: Number of nearest neighbours</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_knn</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_grid</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">neigh</span><span class="p">,</span>
+                       <span class="n">offset</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;ID: </span><span class="si">{</span><span class="n">neigh</span><span class="si">}</span><span class="s2">, SIM: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_similarity</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">neigh</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.get_nth_neighbours"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.get_nth_neighbours">[docs]</a>    <span class="k">def</span> <span class="nf">get_nth_neighbours</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">nths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns ids to the nths nearest neighbours.</span>
+<span class="sd">        The target can be an id from the dataset or an </span>
+<span class="sd">        external feature vector.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param Iterable nths: Position of the nth nearest neighbours.</span>
+
+<span class="sd">        :returns: Indexes of the nearest neighbours.</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_vector</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">nths</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Dataset.show_nth_neighbours"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.show_nth_neighbours">[docs]</a>    <span class="k">def</span> <span class="nf">show_nth_neighbours</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">nths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Shows the nths nearest neighbours.</span>
+<span class="sd">        The target can be an id from the dataset or an </span>
+<span class="sd">        external feature vector.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param Iterable nths: Position of the nth nearest neighbours.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nth_neighbours</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nths</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_grid</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">neigh</span><span class="p">,</span>
+                       <span class="n">offset</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;ID: </span><span class="si">{</span><span class="n">neigh</span><span class="si">}</span><span class="s2">, SIM: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_similarity</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">neigh</span><span class="p">)</span><span class="si">}</span><span class="s2">, nth: </span><span class="si">{</span><span class="n">nths</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.filter_knn"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.filter_knn">[docs]</a>    <span class="k">def</span> <span class="nf">filter_knn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Removes nearest neighbours to the target</span>
+<span class="sd">        from the datset. It invalidates old identificators.</span>
+
+<span class="sd">        :param Union[int, np.ndarray] target: Target index or index array.</span>
+<span class="sd">        :param int k: Number of nearest neighbours</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_knn</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">[</span><span class="n">neighbors</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="Dataset.back"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.back">[docs]</a>    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Reverts the last filtering operation. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Remove last mask from history</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_history</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Merge masks</span>
+        <span class="n">merged_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_full_features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_history</span><span class="p">:</span>
+            <span class="n">merged_mask</span> <span class="o">&amp;=</span> <span class="n">mask</span>
+
+        <span class="c1"># Mask the full array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_features</span><span class="p">[</span><span class="n">merged_mask</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_image_list</span><span class="p">[</span><span class="n">merged_mask</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Dataset.save"><a class="viewcode-back" href="../../manipulators.html#manipulators.dataset.Dataset.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagelist_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">features_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Saves current dataset to the given path. </span>
+
+<span class="sd">        :param str imagelist_path: Path to the output image list</span>
+<span class="sd">        :param str features_path: Path to the output feature matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">imagelist_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_list</span><span class="p">))</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">features_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

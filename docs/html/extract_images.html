@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>extract_images module &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="extractors package" href="extractors.html" />
+    <link rel="prev" title="extract_blur_only module" href="extract_blur_only.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">image_similarity</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html">VLAD_create_dictionary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html">add_ranks_to_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html">create_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html">create_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_blur_only.html">extract_blur_only module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">extract_images module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extract_images.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extract_images.process_extraction"><code class="docutils literal notranslate"><span class="pre">process_extraction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extract_images.validate_args"><code class="docutils literal notranslate"><span class="pre">validate_args()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html">extractors package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html">fix_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html">manipulators package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge_batches.html">merge_batches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_to_sql.html">transform_triplets_to_sql module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_v2_to_sql.html">transform_triplets_v2_to_sql module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">image_similarity</a></li>
+      <li class="breadcrumb-item active">extract_images module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/extract_images.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-extract_images">
+<span id="extract-images-module"></span><h1>extract_images module<a class="headerlink" href="#module-extract_images" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_images.main">
+<span class="sig-prename descclassname"><span class="pre">extract_images.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extract_images.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extract_images.main" title="Permalink to this definition"></a></dt>
+<dd><p>CLI tool for feature extraction. This tools reads input image list, iterate through the images
+and axtract features for all of the defined extractors. Then the output feature matrix is saved
+in the defined output directory under escaped name of the extractor.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">extractors</span></code> (<code class="docutils literal notranslate"><span class="pre">e</span></code>) - Name of an extractor. Can be defined multiple times to use multiple         extractors. Example: <code class="docutils literal notranslate"><span class="pre">-e</span> <span class="pre">&quot;ResNetV2Extractor('50')&quot;</span> <span class="pre">-e</span> <span class="pre">&quot;ResNetV2Extractor('101')&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image_list</span></code> (<code class="docutils literal notranslate"><span class="pre">i</span></code>) - Path to the input image list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_dir</span></code> (<code class="docutils literal notranslate"><span class="pre">o</span></code>) - Path to the output directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">v</span></code>) - Set the verbosity level to at least INFO.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extra_verbose</span></code> (<code class="docutils literal notranslate"><span class="pre">ev</span></code>) - Set the verbosity level to at least DEBUG.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> - Batch size in which the images will be processed.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_images.process_extraction">
+<span class="sig-prename descclassname"><span class="pre">extract_images.</span></span><span class="sig-name descname"><span class="pre">process_extraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extract_images.html#process_extraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extract_images.process_extraction" title="Permalink to this definition"></a></dt>
+<dd><p>Process the feature extraction with the given parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>dict</em>) – CLI arguments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_images.validate_args">
+<span class="sig-prename descclassname"><span class="pre">extract_images.</span></span><span class="sig-name descname"><span class="pre">validate_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/extract_images.html#validate_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#extract_images.validate_args" title="Permalink to this definition"></a></dt>
+<dd><p>Validates if the CLI arguments are processable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>dict</em>) – CLI arguments</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flag if the validation was successful</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="extract_blur_only.html" class="btn btn-neutral float-left" title="extract_blur_only module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="extractors.html" class="btn btn-neutral float-right" title="extractors package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

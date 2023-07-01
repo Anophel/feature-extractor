@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>image_similarity &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VLAD_create_dictionary module" href="VLAD_create_dictionary.html" />
+    <link rel="prev" title="Feature extractors’s documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">image_similarity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html">VLAD_create_dictionary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html">add_ranks_to_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html">create_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html">create_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_blur_only.html">extract_blur_only module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html">extract_images module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html">extractors package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html">fix_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html">manipulators package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge_batches.html">merge_batches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_to_sql.html">transform_triplets_to_sql module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_v2_to_sql.html">transform_triplets_v2_to_sql module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">image_similarity</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-similarity">
+<h1>image_similarity<a class="headerlink" href="#image-similarity" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="VLAD_create_dictionary.html">VLAD_create_dictionary module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html#VLAD_create_dictionary.extract_sift"><code class="docutils literal notranslate"><span class="pre">extract_sift()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html#VLAD_create_dictionary.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="add_ranks_to_triplets.html">add_ranks_to_triplets module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.compute_cosine_distances"><code class="docutils literal notranslate"><span class="pre">compute_cosine_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.compute_euclidean_distances"><code class="docutils literal notranslate"><span class="pre">compute_euclidean_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.compute_single_cosine_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_cosine_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.compute_single_euclidean_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_euclidean_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.filter_image_list_and_features"><code class="docutils literal notranslate"><span class="pre">filter_image_list_and_features()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html#add_ranks_to_triplets.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create_triplets.html">create_triplets module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet"><code class="docutils literal notranslate"><span class="pre">Triplet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.closer_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.closer_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.closer_index"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.closer_path"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.farther_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.farther_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.farther_index"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.farther_path"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.model"><code class="docutils literal notranslate"><span class="pre">Triplet.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.model_prefix"><code class="docutils literal notranslate"><span class="pre">Triplet.model_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.options_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.options_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.other_models_distances"><code class="docutils literal notranslate"><span class="pre">Triplet.other_models_distances</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.target_index"><code class="docutils literal notranslate"><span class="pre">Triplet.target_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets.html#create_triplets.Triplet.target_path"><code class="docutils literal notranslate"><span class="pre">Triplet.target_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.compute_cosine_distances"><code class="docutils literal notranslate"><span class="pre">compute_cosine_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.compute_euclidean_distances"><code class="docutils literal notranslate"><span class="pre">compute_euclidean_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.compute_single_cosine_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_cosine_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.compute_single_euclidean_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_euclidean_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.get_class_start"><code class="docutils literal notranslate"><span class="pre">get_class_start()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html#create_triplets.select_targets"><code class="docutils literal notranslate"><span class="pre">select_targets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create_triplets_v2.html">create_triplets_v2 module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet"><code class="docutils literal notranslate"><span class="pre">Triplet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.closer_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.closer_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.closer_index"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.closer_path"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.closer_rank"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.farther_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.farther_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.farther_index"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.farther_path"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.farther_rank"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.model"><code class="docutils literal notranslate"><span class="pre">Triplet.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.model_prefix"><code class="docutils literal notranslate"><span class="pre">Triplet.model_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.options_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.options_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.other_models_distances"><code class="docutils literal notranslate"><span class="pre">Triplet.other_models_distances</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.target_index"><code class="docutils literal notranslate"><span class="pre">Triplet.target_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.Triplet.target_path"><code class="docutils literal notranslate"><span class="pre">Triplet.target_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.compute_cosine_distances"><code class="docutils literal notranslate"><span class="pre">compute_cosine_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.compute_euclidean_distances"><code class="docutils literal notranslate"><span class="pre">compute_euclidean_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.compute_single_cosine_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_cosine_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.compute_single_euclidean_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_euclidean_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.filter_image_list_and_features"><code class="docutils literal notranslate"><span class="pre">filter_image_list_and_features()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.get_class_start"><code class="docutils literal notranslate"><span class="pre">get_class_start()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html#create_triplets_v2.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extract_blur_only.html">extract_blur_only module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extract_blur_only.html#extract_blur_only.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extract_images.html">extract_images module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html#extract_images.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html#extract_images.process_extraction"><code class="docutils literal notranslate"><span class="pre">process_extraction()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html#extract_images.validate_args"><code class="docutils literal notranslate"><span class="pre">validate_args()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extractors.html">extractors package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.batch_extractor">extractors.batch_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.batch_extractor.BatchExtractor"><code class="docutils literal notranslate"><span class="pre">BatchExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.batch_extractor.BatchExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">BatchExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.batch_extractor.BatchExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">BatchExtractor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.batch_extractor.BatchExtractor.extract"><code class="docutils literal notranslate"><span class="pre">BatchExtractor.extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.batch_extractor.BatchExtractor.extract_with_progress"><code class="docutils literal notranslate"><span class="pre">BatchExtractor.extract_with_progress()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.blurry_extractor">extractors.blurry_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.blurry_extractor.BlurryExtractor"><code class="docutils literal notranslate"><span class="pre">BlurryExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.blurry_extractor.BlurryExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">BlurryExtractor.__call__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.cielab_kmeans_extractor">extractors.cielab_kmeans_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor"><code class="docutils literal notranslate"><span class="pre">CIELABKMeansExctractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__call__"><code class="docutils literal notranslate"><span class="pre">CIELABKMeansExctractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_kmeans_extractor.CIELABKMeansExctractor.__init__"><code class="docutils literal notranslate"><span class="pre">CIELABKMeansExctractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.cielab_positional_extractor">extractors.cielab_positional_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor.__call__"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor.__init__"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_approx_medoid"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor.compute_approx_medoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_mean"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor.compute_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.cielab_positional_extractor.CIELABPositionalExctractor.compute_medoid"><code class="docutils literal notranslate"><span class="pre">CIELABPositionalExctractor.compute_medoid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.clip_extractor">extractors.clip_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.clip_extractor.CLIPExtractor"><code class="docutils literal notranslate"><span class="pre">CLIPExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.clip_extractor.CLIPExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">CLIPExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.clip_extractor.CLIPExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">CLIPExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.convnext_extractor">extractors.convnext_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.convnext_extractor.ConvNeXTExtractor"><code class="docutils literal notranslate"><span class="pre">ConvNeXTExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.convnext_extractor.ConvNeXTExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">ConvNeXTExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.convnext_extractor.ConvNeXTExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">ConvNeXTExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.efficientnet_extractor">extractors.efficientnet_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.efficientnet_extractor.EfficientNetExtractor"><code class="docutils literal notranslate"><span class="pre">EfficientNetExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.efficientnet_extractor.EfficientNetExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">EfficientNetExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.efficientnet_extractor.EfficientNetExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">EfficientNetExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.extractor">extractors.extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.extractor.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.extractor.Extractor.__call__"><code class="docutils literal notranslate"><span class="pre">Extractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.extractor.Extractor.__init__"><code class="docutils literal notranslate"><span class="pre">Extractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.image_gpt_extractor">extractors.image_gpt_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.image_gpt_extractor.ImageGPTExtractor"><code class="docutils literal notranslate"><span class="pre">ImageGPTExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.image_gpt_extractor.ImageGPTExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">ImageGPTExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.image_gpt_extractor.ImageGPTExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">ImageGPTExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.resnet_extractor">extractors.resnet_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.resnet_extractor.ResNetExtractor"><code class="docutils literal notranslate"><span class="pre">ResNetExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.resnet_extractor.ResNetExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">ResNetExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.resnet_extractor.ResNetExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">ResNetExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.resnetv2_extractor">extractors.resnetv2_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.resnetv2_extractor.ResNetV2Extractor"><code class="docutils literal notranslate"><span class="pre">ResNetV2Extractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.resnetv2_extractor.ResNetV2Extractor.__call__"><code class="docutils literal notranslate"><span class="pre">ResNetV2Extractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.resnetv2_extractor.ResNetV2Extractor.__init__"><code class="docutils literal notranslate"><span class="pre">ResNetV2Extractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.rgb_histogram_extractor">extractors.rgb_histogram_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.rgb_histogram_extractor.RGBHistogramExtractor"><code class="docutils literal notranslate"><span class="pre">RGBHistogramExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.rgb_histogram_extractor.RGBHistogramExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">RGBHistogramExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.rgb_histogram_extractor.RGBHistogramExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">RGBHistogramExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.van_extractor">extractors.van_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.van_extractor.VANExtractor"><code class="docutils literal notranslate"><span class="pre">VANExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.van_extractor.VANExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">VANExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.van_extractor.VANExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">VANExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.vit_extractor">extractors.vit_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.vit_extractor.ViTExtractor"><code class="docutils literal notranslate"><span class="pre">ViTExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.vit_extractor.ViTExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">ViTExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.vit_extractor.ViTExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">ViTExtractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.vlad_extractor">extractors.vlad_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.vlad_extractor.VLADExctractor"><code class="docutils literal notranslate"><span class="pre">VLADExctractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.vlad_extractor.VLADExctractor.__call__"><code class="docutils literal notranslate"><span class="pre">VLADExctractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.vlad_extractor.VLADExctractor.__init__"><code class="docutils literal notranslate"><span class="pre">VLADExctractor.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors.w2vv_extractor">extractors.w2vv_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extractors.html#extractors.w2vv_extractor.W2VVExtractor"><code class="docutils literal notranslate"><span class="pre">W2VVExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.w2vv_extractor.W2VVExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">W2VVExtractor.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.w2vv_extractor.W2VVExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">W2VVExtractor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="extractors.html#extractors.w2vv_extractor.W2VVExtractor.loadModel"><code class="docutils literal notranslate"><span class="pre">W2VVExtractor.loadModel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html#module-extractors">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fix_triplets_v2.html">fix_triplets_v2 module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet"><code class="docutils literal notranslate"><span class="pre">Triplet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.closer_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.closer_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.closer_index"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.closer_path"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.closer_rank"><code class="docutils literal notranslate"><span class="pre">Triplet.closer_rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.farther_bin"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_bin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.farther_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.farther_index"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.farther_path"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.farther_rank"><code class="docutils literal notranslate"><span class="pre">Triplet.farther_rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.model"><code class="docutils literal notranslate"><span class="pre">Triplet.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.model_prefix"><code class="docutils literal notranslate"><span class="pre">Triplet.model_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.options_distance"><code class="docutils literal notranslate"><span class="pre">Triplet.options_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.other_models_distances"><code class="docutils literal notranslate"><span class="pre">Triplet.other_models_distances</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.target_index"><code class="docutils literal notranslate"><span class="pre">Triplet.target_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.Triplet.target_path"><code class="docutils literal notranslate"><span class="pre">Triplet.target_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.compute_cosine_distances"><code class="docutils literal notranslate"><span class="pre">compute_cosine_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.compute_euclidean_distances"><code class="docutils literal notranslate"><span class="pre">compute_euclidean_distances()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.compute_single_cosine_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_cosine_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.compute_single_euclidean_distance"><code class="docutils literal notranslate"><span class="pre">compute_single_euclidean_distance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.filter_image_list_and_features"><code class="docutils literal notranslate"><span class="pre">filter_image_list_and_features()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.get_class_start"><code class="docutils literal notranslate"><span class="pre">get_class_start()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html#fix_triplets_v2.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manipulators.html">manipulators package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html#module-manipulators.dataset">manipulators.dataset module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.__init__"><code class="docutils literal notranslate"><span class="pre">Dataset.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.back"><code class="docutils literal notranslate"><span class="pre">Dataset.back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.filter_knn"><code class="docutils literal notranslate"><span class="pre">Dataset.filter_knn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.get_image"><code class="docutils literal notranslate"><span class="pre">Dataset.get_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.get_knn"><code class="docutils literal notranslate"><span class="pre">Dataset.get_knn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.get_nth_neighbours"><code class="docutils literal notranslate"><span class="pre">Dataset.get_nth_neighbours()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.get_similarity"><code class="docutils literal notranslate"><span class="pre">Dataset.get_similarity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.save"><code class="docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.show"><code class="docutils literal notranslate"><span class="pre">Dataset.show()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.show_grid"><code class="docutils literal notranslate"><span class="pre">Dataset.show_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.show_knn"><code class="docutils literal notranslate"><span class="pre">Dataset.show_knn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manipulators.html#manipulators.dataset.Dataset.show_nth_neighbours"><code class="docutils literal notranslate"><span class="pre">Dataset.show_nth_neighbours()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html#module-manipulators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="merge_batches.html">merge_batches module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="merge_batches.html#merge_batches.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transform_triplets_to_sql.html">transform_triplets_to_sql module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_to_sql.html#transform_triplets_to_sql.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transform_triplets_v2_to_sql.html">transform_triplets_v2_to_sql module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_v2_to_sql.html#transform_triplets_v2_to_sql.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Feature extractors’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="VLAD_create_dictionary.html" class="btn btn-neutral float-right" title="VLAD_create_dictionary module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

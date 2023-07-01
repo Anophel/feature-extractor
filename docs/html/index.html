@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feature extractors’s documentation &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="image_similarity" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">image_similarity</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Feature extractors’s documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="feature-extractors-s-documentation">
+<h1>Feature extractors’s documentation<a class="headerlink" href="#feature-extractors-s-documentation" title="Permalink to this heading"></a></h1>
+</section>
+<section id="feature-extractors">
+<h1>Feature extractors<a class="headerlink" href="#feature-extractors" title="Permalink to this heading"></a></h1>
+<p>Feature extractors is a project for easy feature extraction and dataset cleaning.
+This project was created for user study <a class="reference external" href="https://doi.org/10.1007/978-3-031-27818-1_5">Less Is More: Similarity Models for Content-Based Video Retrieval</a> and my Master’s thesis.</p>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
+<section id="prerequisities">
+<h3>Prerequisities<a class="headerlink" href="#prerequisities" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Python &gt;=3.8</p></li>
+<li><p><a class="reference external" href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment">Python-venv</a></p></li>
+<li><p>Pip &gt;=21</p></li>
+</ul>
+</section>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="o">.</span>\<span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</section>
+<section id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">./</span><span class="n">venv</span>
+<span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="o">./</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="extraction">
+<h2>Extraction<a class="headerlink" href="#extraction" title="Permalink to this heading"></a></h2>
+<p>Feature extraction can be done in two ways. The first way is by using the classes directly through API.
+The second method uses a CLI tool that takes a list of images and saves Numpy matrices into the output directory.</p>
+<section id="python-usage">
+<h3>Python Usage<a class="headerlink" href="#python-usage" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">extractors</span> <span class="kn">import</span> <span class="n">ResNetExtractor</span> <span class="c1"># Import any extractor</span>
+
+<span class="n">images_paths</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;imagelist.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span> <span class="c1"># Load list of files to extract</span>
+    <span class="n">images_paths</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="n">extractor</span> <span class="o">=</span> <span class="n">ResNetExtractor</span><span class="p">(</span><span class="s2">&quot;50&quot;</span><span class="p">)</span> <span class="c1"># Create extractor instance</span>
+
+<span class="n">image_features</span> <span class="o">=</span> <span class="n">extractor</span><span class="p">(</span><span class="n">images_paths</span><span class="p">)</span> <span class="c1"># Extract image features</span>
+<span class="c1">#  image_features = (M,N)</span>
+<span class="c1">#  M - number of images</span>
+<span class="c1">#  N - features dimension</span>
+</pre></div>
+</div>
+</section>
+<section id="cli-usage">
+<h3>CLI Usage<a class="headerlink" href="#cli-usage" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">extract_images</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;CIELABKMeansExctractor(k=8)&#39;</span> <span class="s1">&#39;CLIPExtractor(size=&quot;small&quot;)&#39;</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">imagelist</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">o</span> <span class="o">./</span><span class="n">output</span> <span class="o">--</span><span class="n">batch_size</span> <span class="mi">16</span> <span class="o">-</span><span class="n">ev</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dataset-cleaning">
+<h2>Dataset cleaning<a class="headerlink" href="#dataset-cleaning" title="Permalink to this heading"></a></h2>
+<p>The dataset cleaning can be done using <a class="reference external" href="manipulators.html#manipulators.dataset.Dataset">Dataset</a> class in the <a class="reference external" href="manipulators.html">manipulators</a> package.</p>
+<p>An example of dataset cleaning can be seen in the <a class="reference external" href="https://github.com/Anophel/feature-extractor/blob/master/dataset_cleaning.ipynb">dataset-cleaning.ipynb</a></p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">image_similarity</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="VLAD_create_dictionary.html">VLAD_create_dictionary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_ranks_to_triplets.html">add_ranks_to_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets.html">create_triplets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_triplets_v2.html">create_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_blur_only.html">extract_blur_only module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_images.html">extract_images module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extractors.html">extractors package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fix_triplets_v2.html">fix_triplets_v2 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulators.html">manipulators package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge_batches.html">merge_batches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_to_sql.html">transform_triplets_to_sql module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform_triplets_v2_to_sql.html">transform_triplets_v2_to_sql module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="image_similarity" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>create_triplets_v2 &mdash; Feature extractors  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Feature extractors
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">image_similarity</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Feature extractors</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">create_triplets_v2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for create_triplets_v2</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">alive_progress</span> <span class="kn">import</span> <span class="n">alive_bar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Configuration file&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Triplet"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.Triplet">[docs]</a><span class="k">class</span> <span class="nc">Triplet</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal representation of each triplet</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">target_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">closer_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">farther_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_prefix</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">target_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">closer_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">farther_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">closer_distance</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">farther_distance</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">options_distance</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">closer_rank</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">farther_rank</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">closer_bin</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">farther_bin</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">other_models_distances</span><span class="p">:</span> <span class="nb">dict</span></div>
+
+<div class="viewcode-block" id="compute_single_cosine_distance"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.compute_single_cosine_distance">[docs]</a><span class="k">def</span> <span class="nf">compute_single_cosine_distance</span><span class="p">(</span><span class="n">idx1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">idx2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes cosine distance between two images with given features</span>
+
+<span class="sd">        :param int idx1: The first image index</span>
+<span class="sd">        :param int idx2: The second image index</span>
+<span class="sd">        :param np.ndarray features: Image features matrix</span>
+
+<span class="sd">        :returns: Cosine distance</span>
+
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">idx1</span><span class="p">],</span> <span class="n">features</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">idx1</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">idx2</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="compute_cosine_distances"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.compute_cosine_distances">[docs]</a><span class="k">def</span> <span class="nf">compute_cosine_distances</span><span class="p">(</span><span class="n">target_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes cosine distance between the query image and other images with given features</span>
+
+<span class="sd">        :param int idx: The query image index</span>
+<span class="sd">        :param np.ndarray features: Image features matrix</span>
+
+<span class="sd">        :returns: Cosine distances</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">features</span><span class="p">[</span><span class="n">target_idx</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="compute_single_euclidean_distance"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.compute_single_euclidean_distance">[docs]</a><span class="k">def</span> <span class="nf">compute_single_euclidean_distance</span><span class="p">(</span><span class="n">idx1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">idx2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes Euclidean distance between two images with given features</span>
+
+<span class="sd">        :param int idx1: The first image index</span>
+<span class="sd">        :param int idx2: The second image index</span>
+<span class="sd">        :param np.ndarray features: Image features matrix</span>
+
+<span class="sd">        :returns: Euclidean distance</span>
+
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">features</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span> <span class="o">-</span> <span class="n">features</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="compute_euclidean_distances"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.compute_euclidean_distances">[docs]</a><span class="k">def</span> <span class="nf">compute_euclidean_distances</span><span class="p">(</span><span class="n">target_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes Euclidean distance between the query image and other images with given features</span>
+
+<span class="sd">        :param int idx: The query image index</span>
+<span class="sd">        :param np.ndarray features: Image features matrix</span>
+
+<span class="sd">        :returns: Euclidean distances</span>
+
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">features</span> <span class="o">-</span> <span class="n">features</span><span class="p">[</span><span class="n">target_idx</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span></div>
+
+<span class="n">DISTANCE_MEASURES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cosine_distance&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">compute_cosine_distances</span><span class="p">,</span> <span class="n">compute_single_cosine_distance</span><span class="p">),</span> 
+    <span class="s2">&quot;euclidean_distance&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">compute_euclidean_distances</span><span class="p">,</span> <span class="n">compute_single_euclidean_distance</span><span class="p">),</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="get_class_start"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.get_class_start">[docs]</a><span class="k">def</span> <span class="nf">get_class_start</span><span class="p">(</span><span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">distance_classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the start index of the distance class for given end index.</span>
+
+<span class="sd">        :param int end: Last index of the distance class</span>
+<span class="sd">        :param list distance_classes: List of distance classes</span>
+
+<span class="sd">        :returns: Start of the distance class with given end index</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">distance_classes</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="filter_image_list_and_features"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.filter_image_list_and_features">[docs]</a><span class="k">def</span> <span class="nf">filter_image_list_and_features</span><span class="p">(</span><span class="n">image_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">videos_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter image list and features based on the desired videos_list.</span>
+
+<span class="sd">        :param list image_list: Image list</span>
+<span class="sd">        :param np.ndarray features: Image features</span>
+<span class="sd">        :param list videos_list: List of video identifications</span>
+
+<span class="sd">        :returns: Filtered image list and features based on the video_list. If video_list is null,\</span>
+<span class="sd">        then the image list and features are returned unchanged.</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">videos_list</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">image_list</span><span class="p">,</span> <span class="n">features</span>
+    <span class="n">image_mask</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">video</span><span class="p">:</span> <span class="n">video</span> <span class="ow">in</span> <span class="n">img</span><span class="p">,</span> <span class="n">videos_list</span><span class="p">)),</span> <span class="n">image_list</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">image_list</span><span class="p">[</span><span class="n">image_mask</span><span class="p">],</span> <span class="n">features</span><span class="p">[</span><span class="n">image_mask</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../create_triplets_v2.html#create_triplets_v2.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This module creates triplets for the master&#39;s thesis study.</span>
+
+<span class="sd">    The main method reads the configuration file. Then the triplets are created accordingly.</span>
+
+<span class="sd">    * ``input_dir`` - The directory with the txt and npy outputs from the feature extraction implemented in :py:mod:`extract_images`.</span>
+<span class="sd">    * ``output_file`` - Name of the output CSV file</span>
+<span class="sd">    * ``targets`` - Number of distinct target images. The targets will be the same for all the extractors.</span>
+<span class="sd">    * ``distance_measures`` - List of distance measures for the triplet generation.</span>
+<span class="sd">    * ``distance_classes`` - Distance classes for the triplets. Each distance class is defined with its end index. The start index is computed as previous end index + 1.</span>
+<span class="sd">    * ``videos_filter`` - (Optional) Path to a file with identifications of videos.</span>
+
+<span class="sd">    Example configuration file.</span>
+
+<span class="sd">.. literalinclude:: ../config/create_triplets_w_filter.yaml</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check configuration</span>
+    <span class="n">config_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+
+    <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFIG:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">input_dir</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;input_dir&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)</span>
+
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;output_file&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+
+    <span class="n">num_of_targets</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;targets&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">num_of_targets</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">num_of_targets</span> <span class="o">&lt;</span> <span class="mi">10000</span>
+
+    <span class="n">distance_measures</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;distance_measures&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="n">distance_measures</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">dm</span> <span class="ow">in</span> <span class="n">DISTANCE_MEASURES</span>
+
+    <span class="n">distance_classes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;distance_classes&quot;</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">distance_classes</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">dc</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">dc1</span><span class="p">,</span> <span class="n">dc2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">distance_classes</span><span class="p">,</span> <span class="n">distance_classes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="k">assert</span> <span class="n">dc1</span> <span class="o">&lt;</span> <span class="n">dc2</span>
+
+    <span class="c1"># Load prefixes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading prefixes&quot;</span><span class="p">)</span>
+
+    <span class="n">prefixes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^(.*).txt$&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">input_dir</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span> <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">):</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">1&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">prefixes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span><span class="si">}</span><span class="s2"> prefixes&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;***&quot;</span><span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of targets: </span><span class="si">{</span><span class="n">num_of_targets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">videos_list</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s2">&quot;videos_filter&quot;</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;videos_filter&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;videos_filter&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;videos_filter&quot;</span><span class="p">])</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;videos_filter&quot;</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">videos_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded videos_filter </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;videos_filter&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping videos_filter&quot;</span><span class="p">)</span>
+        
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating triplets&quot;</span><span class="p">)</span>
+
+    <span class="n">generated_triplets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">with</span> <span class="n">alive_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">distance_measures</span><span class="p">)</span> <span class="o">*</span> 
+        <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">distance_classes</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">distance_classes</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">num_of_targets</span><span class="p">)</span> <span class="k">as</span> <span class="n">bar</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">prefixes</span><span class="p">:</span>
+            <span class="c1"># Load model details</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">image_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">])</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">.npy&quot;</span><span class="p">))</span>
+            <span class="n">image_list</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">filter_image_list_and_features</span><span class="p">(</span><span class="n">image_list</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">videos_list</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;After filtering features.shape=</span><span class="si">{</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Select distance measure</span>
+            <span class="k">for</span> <span class="n">dist_measure</span> <span class="ow">in</span> <span class="n">distance_measures</span><span class="p">:</span>
+                <span class="c1"># Crete triplets for each target</span>
+                <span class="k">for</span> <span class="n">target_iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_of_targets</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">closer_class</span> <span class="ow">in</span> <span class="n">distance_classes</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">farther_class</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">closer_class</span><span class="p">,</span> <span class="n">distance_classes</span><span class="p">):</span>
+                            <span class="c1"># For every triplet get new target</span>
+                            <span class="n">target_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                            <span class="c1"># Computed all distances for the target</span>
+                            <span class="n">distances</span> <span class="o">=</span> <span class="n">DISTANCE_MEASURES</span><span class="p">[</span><span class="n">dist_measure</span><span class="p">][</span><span class="mi">0</span><span class="p">](</span><span class="n">target_idx</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+                            <span class="c1"># Get sorted indexes for fast class selection</span>
+                            <span class="n">sorted_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+
+                            <span class="c1"># Find first closer option for the triplet</span>
+                            <span class="n">closer_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sorted_indexes</span><span class="p">[</span><span class="n">get_class_start</span><span class="p">(</span><span class="n">closer_class</span><span class="p">,</span> <span class="n">distance_classes</span><span class="p">)</span> <span class="p">:</span> <span class="n">closer_class</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                            <span class="c1"># Find the farther option for the triplet</span>
+                            <span class="n">farther_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sorted_indexes</span><span class="p">[</span><span class="n">get_class_start</span><span class="p">(</span><span class="n">farther_class</span><span class="p">,</span> <span class="n">distance_classes</span><span class="p">)</span> <span class="p">:</span> <span class="n">farther_class</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+                            <span class="c1"># Fix getting same options</span>
+                            <span class="k">if</span> <span class="n">farther_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">closer_idx</span><span class="p">:</span>
+                                <span class="n">farther_idx</span> <span class="o">=</span> <span class="n">farther_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">farther_idx</span> <span class="o">=</span> <span class="n">farther_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                            <span class="c1"># Compute distance between options</span>
+                            <span class="n">options_distance</span> <span class="o">=</span> <span class="n">DISTANCE_MEASURES</span><span class="p">[</span><span class="n">dist_measure</span><span class="p">][</span><span class="mi">1</span><span class="p">](</span><span class="n">closer_idx</span><span class="p">,</span> <span class="n">farther_idx</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+
+                            <span class="c1"># Save the created triplet with additional metadata</span>
+                            <span class="n">generated_triplets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Triplet</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">image_list</span><span class="p">[</span><span class="n">target_idx</span><span class="p">],</span> <span class="n">image_list</span><span class="p">[</span><span class="n">closer_idx</span><span class="p">],</span> 
+                                <span class="n">image_list</span><span class="p">[</span><span class="n">farther_idx</span><span class="p">],</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">target_idx</span><span class="p">,</span> <span class="n">closer_idx</span><span class="p">,</span> <span class="n">farther_idx</span><span class="p">,</span> <span class="n">distances</span><span class="p">[</span><span class="n">closer_idx</span><span class="p">],</span> 
+                                <span class="n">distances</span><span class="p">[</span><span class="n">farther_idx</span><span class="p">],</span> <span class="n">options_distance</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sorted_indexes</span> <span class="o">==</span> <span class="n">closer_idx</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
+                                <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sorted_indexes</span> <span class="o">==</span> <span class="n">farther_idx</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">closer_class</span><span class="p">,</span> <span class="n">farther_class</span><span class="p">,</span> <span class="p">{}))</span>
+                            
+                            <span class="c1"># Increment counter</span>
+                            <span class="n">bar</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Triplets DONE&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing additional model metrics&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">alive_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">generated_triplets</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">distance_measures</span><span class="p">))</span> <span class="k">as</span> <span class="n">bar</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">prefixes</span><span class="p">:</span>
+            <span class="c1"># Load model details</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">image_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">])</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">.npy&quot;</span><span class="p">))</span>
+            <span class="n">image_list</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">filter_image_list_and_features</span><span class="p">(</span><span class="n">image_list</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">videos_list</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">triplet</span> <span class="ow">in</span> <span class="n">generated_triplets</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">dist_measure</span> <span class="ow">in</span> <span class="n">distance_measures</span><span class="p">:</span>
+                    <span class="c1"># Compute distances in the triangle</span>
+                    <span class="n">closer_distance</span> <span class="o">=</span> <span class="n">DISTANCE_MEASURES</span><span class="p">[</span><span class="n">dist_measure</span><span class="p">][</span><span class="mi">1</span><span class="p">](</span><span class="n">triplet</span><span class="o">.</span><span class="n">target_index</span><span class="p">,</span> <span class="n">triplet</span><span class="o">.</span><span class="n">closer_index</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+                    <span class="n">farther_distance</span> <span class="o">=</span> <span class="n">DISTANCE_MEASURES</span><span class="p">[</span><span class="n">dist_measure</span><span class="p">][</span><span class="mi">1</span><span class="p">](</span><span class="n">triplet</span><span class="o">.</span><span class="n">target_index</span><span class="p">,</span> <span class="n">triplet</span><span class="o">.</span><span class="n">farther_index</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+                    <span class="n">options_distance</span> <span class="o">=</span> <span class="n">DISTANCE_MEASURES</span><span class="p">[</span><span class="n">dist_measure</span><span class="p">][</span><span class="mi">1</span><span class="p">](</span><span class="n">triplet</span><span class="o">.</span><span class="n">closer_index</span><span class="p">,</span> <span class="n">triplet</span><span class="o">.</span><span class="n">farther_index</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+
+                    <span class="n">triplet</span><span class="o">.</span><span class="n">other_models_distances</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dist_measure</span><span class="si">}</span><span class="s2">_closer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">closer_distance</span>
+                    <span class="n">triplet</span><span class="o">.</span><span class="n">other_models_distances</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dist_measure</span><span class="si">}</span><span class="s2">_farther&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">farther_distance</span>
+                    <span class="n">triplet</span><span class="o">.</span><span class="n">other_models_distances</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dist_measure</span><span class="si">}</span><span class="s2">_options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">options_distance</span>
+
+                    <span class="c1"># Increment counter</span>
+                    <span class="n">bar</span><span class="p">()</span>
+                
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving triplets&quot;</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span> <span class="o">!=</span> <span class="s2">&quot;other_models_distances&quot;</span><span class="p">,</span> <span class="n">Triplet</span><span class="o">.</span><span class="n">_fields</span><span class="p">))</span>
+    <span class="n">other_models_header</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">generated_triplets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">other_models_distances</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># Write header</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">other_models_header</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1"># Write data</span>
+        <span class="k">for</span> <span class="n">triplet</span> <span class="ow">in</span> <span class="n">generated_triplets</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">triplet</span><span class="p">,</span> <span class="n">col</span><span class="p">)))</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">other_models_header</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">triplet</span><span class="o">.</span><span class="n">other_models_distances</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([]</span> <span class="k">if</span> <span class="s2">&quot;__file__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Patrik Veselý.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
