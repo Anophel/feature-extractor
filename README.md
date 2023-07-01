@@ -1,4 +1,7 @@
-# feature-extractor
+# Feature extractors
+
+Feature extractors is a project for easy feature extraction and dataset cleaning.
+This project was created for user study [Less Is More: Similarity Models for Content-Based Video Retrieval](https://doi.org/10.1007/978-3-031-27818-1_5) and my Master's thesis.
 
 ## Install
 
@@ -23,6 +26,9 @@ pip install -r ./requirements.txt
 ```
 
 ## Extraction
+
+Feature extraction can be done in two ways. The first way is by using the classes directly through API.
+The second method uses a CLI tool that takes a list of images and saves Numpy matrices into the output directory.
 
 ### Python Usage
 
@@ -49,4 +55,6 @@ python extract_images.py -e 'CIELABKMeansExctractor(k=8)' 'CLIPExtractor(size="s
 
 ## Dataset cleaning
 
-See [dataset-cleaning.ipynb](https://github.com/Anophel/feature-extractor/blob/master/dataset_cleaning.ipynb)
+The dataset cleaning can be done using [Dataset](manipulators.html#manipulators.dataset.Dataset) class in the [manipulators](manipulators.html) package.
+
+An example of dataset cleaning can be seen in the [dataset-cleaning.ipynb](https://github.com/Anophel/feature-extractor/blob/master/dataset_cleaning.ipynb)

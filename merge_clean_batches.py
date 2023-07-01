@@ -10,6 +10,20 @@ parser.add_argument("-o", "--output_dir", required=True, type=str,
                     help="Output directory")
 
 def main(args):
+    """
+    CLI tool for merging batches of multiple models.
+
+    The feature extraction can be run in multiple processes and even on multiple computers if the imagelist
+    is splitted. The splitting and running is pretty straight forward, but the final merging can be tricky
+    because two files (image list and feature matrix) from each batch has to be concatenated accordingly.
+    Therefore this utility does this merging in the safe way.
+
+    Additional sorting is added to achieve deterministic output
+
+    Arguments:
+    * ``input_dir`` (``i``) - Path to input directory with batches from all models are located.
+    * ``output_dir`` (``o``) - Path to the output directory where the merged features will be placed.
+    """
     main_root = args.input_dir
     assert os.path.isdir(main_root)
 

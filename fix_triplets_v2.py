@@ -12,6 +12,8 @@ parser.add_argument("-c", "--config", required=True, type=str,
                     help="Configuration file")
 
 class Triplet(NamedTuple):
+    """Internal representation of each triplet
+    """
     model: str
     target_path: str
     closer_path: str
@@ -30,15 +32,53 @@ class Triplet(NamedTuple):
     other_models_distances: dict
 
 def compute_single_cosine_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes cosine distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distance
+
+        :rtype: float
+    """
     return 1 - np.dot(features[idx1], features[idx2]) / (np.linalg.norm(features[idx1]) * np.linalg.norm(features[idx2]))
 
 def compute_cosine_distances(target_idx: int, features: np.ndarray):
+    """Computes cosine distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distances
+
+        :rtype: np.ndarray
+    """
     return 1 - np.dot(features, features[target_idx]) / (np.linalg.norm(features, axis=1) * np.linalg.norm(features[target_idx]))
 
 def compute_single_euclidean_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes Euclidean distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distance
+
+        :rtype: float
+    """
     return np.sqrt(np.sum((features[idx1] - features[idx2]) ** 2))
 
 def compute_euclidean_distances(target_idx: int, features: np.ndarray):
+    """Computes Euclidean distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distances
+
+        :rtype: np.ndarray
+    """
     return np.sqrt(np.sum((features - features[target_idx]) ** 2, axis=-1))
 
 DISTANCE_MEASURES = {
@@ -46,16 +86,50 @@ DISTANCE_MEASURES = {
     "euclidean_distance": (compute_euclidean_distances, compute_single_euclidean_distance),
 }
 
-def get_class_start(end, distance_classes):
+def get_class_start(end: int, distance_classes: list):
+    """Finds the start index of the distance class for given end index.
+
+        :param int end: Last index of the distance class
+        :param list distance_classes: List of distance classes
+
+        :returns: Start of the distance class with given end index
+
+        :rtype: int
+    """
     return list(filter(lambda c: c < end, [1] + distance_classes))[-1]
 
-def filter_image_list_and_features(image_list, features, videos_list):
+def filter_image_list_and_features(image_list: list, features: np.ndarray, videos_list: list):
+    """
+
+        :param list image_list: Image list
+        :param np.ndarray features: Image features
+        :param list videos_list: List of video identifications
+
+        :returns: 
+
+        :rtype: tuple
+    """
     if videos_list == None:
         return image_list, features
     image_mask = list(map(lambda img: any(map(lambda video: video in img, videos_list)), image_list))
     return image_list[image_mask], features[image_mask]
 
 def main(args):
+    """This module updates triplets distances for the master's thesis study.
+
+    The main method reads the configuration file. Then the triplets are updated accordingly.
+
+    * ``input_dir`` - The directory with the txt and npy outputs from the feature extraction implemented in :py:mod:`extract_images`.
+    * ``output_file`` - Name of the output CSV file from :py:mod:`create_triplets_v2`. The updated triplets will be saved with this name and suffix ``.fixed.csv``.
+    * ``targets`` - Number of distinct target images. The targets will be the same for all the extractors.
+    * ``distance_measures`` - List of distance measures for the triplet generation.
+    * ``distance_classes`` - Distance classes for the triplets. Each distance class is defined with its end index. The start index is computed as previous end index + 1.
+    * ``videos_filter`` - (Optional) Path to a file with identifications of videos.
+
+    Example configuration file.
+
+.. literalinclude:: ../config/create_triplets_w_filter.yaml
+    """
     # Check configuration
     config_path = args.config
     assert os.path.isfile(config_path)

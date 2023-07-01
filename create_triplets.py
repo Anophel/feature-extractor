@@ -11,6 +11,8 @@ parser.add_argument("-c", "--config", required=True, type=str,
                     help="Configuration file")
 
 class Triplet(NamedTuple):
+    """Internal representation of each triplet
+    """
     model: str
     target_path: str
     closer_path: str
@@ -27,15 +29,53 @@ class Triplet(NamedTuple):
     other_models_distances: dict
 
 def compute_single_cosine_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes cosine distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distance
+
+        :rtype: float
+    """
     return 1 - np.dot(features[idx1], features[idx2]) / (np.linalg.norm(features[idx1]) * np.linalg.norm(features[idx2]))
 
 def compute_cosine_distances(target_idx: int, features: np.ndarray):
+    """Computes cosine distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distances
+
+        :rtype: np.ndarray
+    """
     return 1 - np.dot(features, features[target_idx]) / (np.linalg.norm(features, axis=1) * np.linalg.norm(features[target_idx]))
 
 def compute_single_euclidean_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes Euclidean distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distance
+
+        :rtype: float
+    """
     return np.sqrt(np.sum((features[idx1] - features[idx2]) ** 2))
 
 def compute_euclidean_distances(target_idx: int, features: np.ndarray):
+    """Computes Euclidean distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distances
+
+        :rtype: np.ndarray
+    """
     return np.sqrt(np.sum((features - features[target_idx]) ** 2, axis=-1))
 
 DISTANCE_MEASURES = {
@@ -44,14 +84,47 @@ DISTANCE_MEASURES = {
 }
 
 def select_targets(image_list_path: str, num_of_targets: int):
+    """Reads given image list and choose a given number of rows without repetition.
+
+        :param str image_list_path: Path to image list
+        :param int num_of_targets: Number of desired targets
+
+        :returns: Random subset of rows from image_list_path file
+
+        :rtype: np.ndarray
+    """
     with open(image_list_path, "r") as f:
         image_list = [line.rstrip() for line in f.readlines()]
     return np.random.choice(image_list, size=num_of_targets, replace=False)
 
-def get_class_start(end, distance_classes):
+def get_class_start(end: int, distance_classes: list):
+    """Finds the start index of the distance class for given end index.
+
+        :param int end: Last index of the distance class
+        :param list distance_classes: List of distance classes
+
+        :returns: Start of the distance class with given end index
+
+        :rtype: int
+    """
     return list(filter(lambda c: c < end, [1] + distance_classes))[-1]
 
 def main(args):
+    """This module creates triplets for the preliminary study.
+
+    The main method reads the configuration file. Then the triplets are created accordingly.
+
+    * ``input_dir`` - The directory with the txt and npy outputs from the feature extraction implemented in :py:mod:`extract_images`.
+    * ``output_file`` - Name of the output CSV file
+    * ``targets`` - Number of distinct target images. The targets will be the same for all the extractors.
+    * ``distance_measures`` - List of distance measures for the triplet generation.
+    * ``distance_classes`` - Distance classes for the triplets. Each distance class is defined with its end index. The start index is computed as previous end index + 1.
+
+    Example configuration file.
+
+.. literalinclude:: ../config/create_triplets.yaml
+    """
+
     # Check configuration
     config_path = args.config
     assert os.path.isfile(config_path)

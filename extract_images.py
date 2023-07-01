@@ -24,14 +24,22 @@ parser.add_argument("-ev", "--extra_verbose", action="store_true",
                     help="Extra verbosity level [on/off].", default=False)
 parser.add_argument("--batch_size", type=int,
                     help="""The size of the batch in image processing. 
-    If the extraction is too slow, you should increase the batch size.
-    If the extarction is raising memory error, you should decrease the batch size.
-    Default value is 64.
-    """,
+                            If the extraction is too slow, you should increase the batch size.
+                            If the extarction is raising memory error, you should decrease the batch size.
+                            Default value is 64.
+                            """,
                     default=64)
 
 
 def validate_args(args):
+    """Validates if the CLI arguments are processable.
+
+        :param dict args: CLI arguments
+
+        :returns: Flag if the validation was successful
+
+        :rtype: bool
+    """
     passed = True
     if len(args.extractors) == 0:
         logging.error("Missing extractors (--extractors).")
@@ -65,6 +73,10 @@ def validate_args(args):
 
 
 def process_extraction(args):
+    """Process the feature extraction with the given parameters.
+
+        :param dict args: CLI arguments
+    """
     images_paths = []
     with open(args.image_list, "r") as file:
         images_paths = [line.rstrip() for line in file.readlines()]
@@ -86,6 +98,20 @@ def process_extraction(args):
 
 
 def main(args):
+    """
+    CLI tool for feature extraction. This tools reads input image list, iterate through the images
+    and axtract features for all of the defined extractors. Then the output feature matrix is saved 
+    in the defined output directory under escaped name of the extractor.
+
+    Arguments:
+    * ``extractors`` (``e``) - Name of an extractor. Can be defined multiple times to use multiple \
+        extractors. Example: ``-e "ResNetV2Extractor('50')" -e "ResNetV2Extractor('101')"``
+    * ``image_list`` (``i``) - Path to the input image list.
+    * ``output_dir`` (``o``) - Path to the output directory.
+    * ``verbose`` (``v``) - Set the verbosity level to at least INFO.
+    * ``extra_verbose`` (``ev``) - Set the verbosity level to at least DEBUG.
+    * ``batch_size`` - Batch size in which the images will be processed.
+    """
     if args.extra_verbose:
         logging.basicConfig(
             format='%(levelname)s:\t%(message)s', level=logging.DEBUG)

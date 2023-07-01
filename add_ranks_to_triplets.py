@@ -13,21 +13,57 @@ parser.add_argument("-o", "--output", required=True, type=str,
                     help="Output csv file")
 parser.add_argument("-mi", "--model_index", required=False, type=int,
                     help="Index of model to evaluate", default=-1)
-parser.add_argument("-vl", "--video_list", required=False, default=None, type=str,
-                    help="Output csv file")
 
 MODEL_SUFFIX = "_cosine_distance_closer"
 
 def compute_single_cosine_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes cosine distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distance
+
+        :rtype: float
+    """
     return 1 - np.dot(features[idx1], features[idx2]) / (np.linalg.norm(features[idx1]) * np.linalg.norm(features[idx2]))
 
 def compute_cosine_distances(target_idx: int, features: np.ndarray):
+    """Computes cosine distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Cosine distances
+
+        :rtype: np.ndarray
+    """
     return 1 - np.dot(features, features[target_idx])
 
 def compute_single_euclidean_distance(idx1: int, idx2: int, features: np.ndarray):
+    """Computes Euclidean distance between two images with given features
+
+        :param int idx1: The first image index
+        :param int idx2: The second image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distance
+
+        :rtype: float
+    """
     return np.sqrt(np.sum((features[idx1] - features[idx2]) ** 2))
 
 def compute_euclidean_distances(target_idx: int, features: np.ndarray):
+    """Computes Euclidean distance between the query image and other images with given features
+
+        :param int idx: The query image index
+        :param np.ndarray features: Image features matrix
+
+        :returns: Euclidean distances
+
+        :rtype: np.ndarray
+    """
     return np.sqrt(np.sum((features - features[target_idx]) ** 2, axis=-1))
 
 DISTANCE_MEASURES = {
@@ -35,13 +71,32 @@ DISTANCE_MEASURES = {
     #"euclidean_distance": (compute_euclidean_distances, compute_single_euclidean_distance),
 }
 
-def filter_image_list_and_features(image_list, features, videos_list):
+def filter_image_list_and_features(image_list: list, features: np.ndarray, videos_list: list):
+    """
+
+        :param list image_list: Image list
+        :param np.ndarray features: Image features
+        :param list videos_list: List of video identifications
+
+        :returns: 
+
+        :rtype: tuple
+    """
     if videos_list == None:
         return image_list, features
     image_mask = list(map(lambda img: any(map(lambda video: video in img, videos_list)), image_list))
     return image_list[image_mask], features[image_mask]
 
 def main(args):
+    """
+    CLI tool for computing ranks for each triplet.
+
+    Arguments:
+    * ``triplets`` (``t``) - Path to the triplets CSV file.
+    * ``models_path`` (``m``) - Path to the extracted features.
+    * ``output`` (``o``) - Path to the output CSV.
+    * ``model_index`` (``mi``) - (Optional) Index of a model that should be evaluated.
+    """
     print("Checking parameters")
     # First parameter check
     assert os.path.isfile(args.triplets)
@@ -49,15 +104,6 @@ def main(args):
 
     open(args.output, 'w').close()
     assert os.path.exists(args.output)
-
-    videos_list = None
-    if args.video_list is not None:
-        assert os.path.exists(args.video_list)
-        with open(args.video_list, "r") as f:
-            videos_list = [line.rstrip() for line in f]
-        print(f"Loaded videos_filter {args.video_list}")
-    else:
-        print("Skipping videos_filter")
 
     print("Loading triplets")
     # Load source data
