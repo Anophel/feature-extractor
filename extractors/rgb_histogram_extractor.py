@@ -2,7 +2,15 @@ import numpy as np
 from .extractor import Extractor
 
 class RGBHistogramExtractor(Extractor):
+    """
+    Extractor that computes RGB histogram from the input images.
+    """
+
     def __init__(self, bins: int) -> None:
+        """Constructor method
+
+        :param int bins: Number of bins of the output histograms per colour channel. Should satisfy 1 <= bins <= 256.
+        """
         super().__init__(bins=bins)
         self.bins = bins
 

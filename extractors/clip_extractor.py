@@ -3,7 +3,16 @@ import numpy as np
 
 
 class CLIPExtractor(Extractor):
+    """
+    Extractor that feeds forward the images through CLIP.
+    """
+
     def __init__(self, size: str = "small") -> None:
+        """Constructor method
+
+        :param str size: Size of the neural network. Possible values: \"small\", \"medium\", \"large\".
+        """
+
         super().__init__(size=size)
         from transformers import logging as huglogging
         from transformers import CLIPFeatureExtractor, CLIPVisionModel

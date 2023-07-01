@@ -2,7 +2,16 @@ import numpy as np
 from .extractor import Extractor
 
 class EfficientNetExtractor(Extractor):
+    """
+    Extractor that feeds forward the images through EfficientNet.
+    """
+
     def __init__(self, size: str = "0") -> None:
+        """Constructor method
+
+        :param str size: Size of the neural network. Possible values: \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\".
+        """
+
         super().__init__(size=size)
         import tensorflow as tf
 

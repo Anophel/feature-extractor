@@ -2,7 +2,18 @@ import numpy as np
 from .extractor import Extractor
 
 class CIELABKMeansExctractor(Extractor):
+    """
+    Extractor that converts the image pixels into CIELAB colour space
+    and then computes KMean on these values. The k parameter for KMeans
+    is selected in constructor. Final feature vector are concatenated 
+    CIELAB values from the KMeans centroids ordered by their hue. 
+    """
+
     def __init__(self, k: int) -> None:
+        """Constructor method
+
+        :param int k: Parameter k for KMeans.
+        """
         super().__init__(k=k)
         self.k = k
 

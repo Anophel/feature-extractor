@@ -2,7 +2,16 @@ from .extractor import Extractor
 import numpy as np
 
 class ConvNeXTExtractor(Extractor):
+    """
+    Extractor that feeds forward the images through ConvNeXT.
+    """
+
     def __init__(self, size : str = "base") -> None:
+        """Constructor method
+
+        :param str size: Size of the neural network. Possible values: \"tiny\", \"small\", \"base\", \"large\".
+        """
+
         super().__init__(size=size)
         from transformers import ConvNextFeatureExtractor
         from transformers import ConvNextModel

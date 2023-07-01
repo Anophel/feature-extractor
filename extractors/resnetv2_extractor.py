@@ -2,7 +2,16 @@ import numpy as np
 from .extractor import Extractor
 
 class ResNetV2Extractor(Extractor):
+    """
+    Extractor that feeds forward the images through ResNetV2.
+    """
+
     def __init__(self, size: str = "50") -> None:
+        """Constructor method
+
+        :param str size: Size of the neural network. Possible values: \"50\", \"101\", \"152\".
+        """
+        
         super().__init__(size=size)
         import tensorflow as tf
 

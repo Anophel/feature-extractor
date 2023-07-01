@@ -3,6 +3,10 @@ import cv2
 from extractors.extractor import Extractor
 
 class BlurryExtractor(Extractor):
+    """
+    Blurry extractor that produce a single float value for each image.
+    The graeter the value the less blurry the image is.
+    """
 
     def __call__(self, image_paths: list) -> np.ndarray:
         features = []

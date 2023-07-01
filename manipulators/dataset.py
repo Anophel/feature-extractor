@@ -12,8 +12,18 @@ from typing import Callable, Union
 
 
 class Dataset:
+    """
+    Class for exploring and manipulating with the given dataset.
+    """
 
     def __init__(self, imagelist_path: str, features_path: str, media_server: str = None, media_server_auth: HTTPBasicAuth = None) -> None:
+        """Constructor method
+
+        :param str imagelist_path: Path to the image list.
+        :param str features_path: Path to the feature matrix.
+        :param str media_server: URL of the media server. Images will be read from the local disk if None.
+        :param HTTPBasicAuth media_server_auth: Basic authentication for the media server.
+        """
         assert os.path.isfile(
             imagelist_path), "Incorrect imagelist_path. The file does not exist!"
         assert os.path.isfile(
@@ -48,6 +58,12 @@ class Dataset:
         """ Loads image in binary format from
         the appropriate storage based on the
         index provided.features_path
+
+        :param int target: Path to an image.
+
+        :returns: Binary representation of the image.
+
+        :rtype: BytesIO
         """
         if self._media_server is None:
             with open(self._image_list[target], 'rb') as f:
@@ -60,6 +76,9 @@ class Dataset:
     def show(self, target: int, ax: Axes = None):
         """ Shows the image based on the index
         provided.
+
+        :param int target: Image index to show
+        :param Axes ax: Axes from matplotlib to use for show. Will use base package if None.
         """
         image = io.imread(self.get_image(target))
         if ax is None:
@@ -74,6 +93,9 @@ class Dataset:
         """ Shows multiple images from the ids iterable. 
         Additionally the title callback can be specified
         to generate custom titles per image.
+
+        :param Iterable ids: Ids of images to show in grid
+        :param Callable[[int, int], str] title_callback: Callback which will be called when mapping the title.
         """
         k = len(ids)
         fig, axes = plt.subplots(ncols=4, nrows=int(
@@ -93,6 +115,14 @@ class Dataset:
         plt.show()
 
     def _get_feature_vector(self, target: Union[int, np.ndarray]) -> np.ndarray:
+        """ Finds the feature vector for the target.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+
+        :returns: Target image features.
+
+        :rtype: np.ndarray
+        """
         if type(target) is np.ndarray:
             target /= np.linalg.norm(target, axis=-1, keepdims=True)
             assert len(target.shape) == 1, "Target has to be vector"
@@ -105,6 +135,13 @@ class Dataset:
         """ Computes similarity between given target and
         other image in the dataset. The target can be an
         identificator from the dataset or a feature vector.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param int other: Image index
+
+        :returns: Similarity score vector.
+
+        :rtype: np.ndarray
         """
         target = self._get_feature_vector(target)
         return np.dot(target, self._features[other])
@@ -113,6 +150,13 @@ class Dataset:
         """ Returns ids to the nearest neighbours
         from the target query. The target can be
         an id from the dataset or a feature vector.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param int k: Number of nearest neighbours
+
+        :returns: Indexes of the nearest neighbours.
+
+        :rtype: np.ndarray
         """
         target = self._get_feature_vector(target)
         distances = np.dot(self._features, target)
@@ -121,7 +165,11 @@ class Dataset:
     def show_knn(self, target: Union[int, np.ndarray], k: int = 4):
         """ Shows images from the nearest neighbourhood
         of the target. The target can be an id from the
-        dataset or an external feature vector."""
+        dataset or an external feature vector.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param int k: Number of nearest neighbours
+        """
         neighbors = self.get_knn(target, k)
         self.show_grid(neighbors, lambda neigh,
                        offset: f"ID: {neigh}, SIM: {self.get_similarity(target, neigh)}")
@@ -130,6 +178,13 @@ class Dataset:
         """ Returns ids to the nths nearest neighbours.
         The target can be an id from the dataset or an 
         external feature vector.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param Iterable nths: Position of the nth nearest neighbours.
+
+        :returns: Indexes of the nearest neighbours.
+
+        :rtype: np.ndarray
         """
         target = self._get_feature_vector(target)
         distances = np.dot(self._features, target)
@@ -139,6 +194,9 @@ class Dataset:
         """ Shows the nths nearest neighbours.
         The target can be an id from the dataset or an 
         external feature vector.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param Iterable nths: Position of the nth nearest neighbours.
         """
         neighbors = self.get_nth_neighbours(target, nths)
         self.show_grid(neighbors, lambda neigh,
@@ -147,6 +205,9 @@ class Dataset:
     def filter_knn(self, target: Union[int, np.ndarray], k: int):
         """ Removes nearest neighbours to the target
         from the datset. It invalidates old identificators.
+
+        :param Union[int, np.ndarray] target: Target index or index array.
+        :param int k: Number of nearest neighbours
         """
         neighbors = self.get_knn(target, k)
         mask = np.ones(self._features.shape[0], dtype=bool)
@@ -157,7 +218,9 @@ class Dataset:
         self._image_list = self._image_list[mask]
     
     def back(self):
-        """ Reverts the last filtering operation. """
+        """ 
+        Reverts the last filtering operation. 
+        """
         # Remove last mask from history
         self._mask_history = self._mask_history[:-1]
 
@@ -171,7 +234,12 @@ class Dataset:
         self._image_list = self._full_image_list[merged_mask]
 
     def save(self, imagelist_path: str, features_path: str):
-        """ Saves current dataset to the given path. """
+        """ 
+        Saves current dataset to the given path. 
+
+        :param str imagelist_path: Path to the output image list
+        :param str features_path: Path to the output feature matrix
+        """
         with open(imagelist_path, "w") as f:
             f.writelines('\n'.join(self._image_list))
         

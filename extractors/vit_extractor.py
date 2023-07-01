@@ -2,7 +2,16 @@ from .extractor import Extractor
 import numpy as np
 
 class ViTExtractor(Extractor):
+    """
+    Extractor that feeds forward the images through ViT.
+    """
+
     def __init__(self, size : str = "base") -> None:
+        """Constructor method
+
+        :param str size: Size of the neural network. Possible values: \"base\", \"large\".
+        """
+
         super().__init__(size=size)
         from transformers import ViTFeatureExtractor
         from transformers import TFViTForImageClassification

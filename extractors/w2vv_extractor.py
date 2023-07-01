@@ -3,7 +3,18 @@ import numpy as np
 
 
 class W2VVExtractor(Extractor):
+    """
+    Extractor that feeds forward the images through W2VV++.
+    """
+
     def __init__(self, networks_path: str = "models", use_gpu: bool = True, batch_size: int = 1) -> None:
+        """Constructor method
+
+        :param str networks_path: Path to the model saved weights.
+        :param bool use_gpu: Flag to use a gpu. Should be False if no GPU is present.
+        :param int batch_size: Batch size.
+        """
+
         super().__init__(networks_path=networks_path, use_gpu=use_gpu, batch_size=batch_size)
         import os
         from collections import namedtuple
@@ -23,7 +34,18 @@ class W2VVExtractor(Extractor):
         self.batch_def = namedtuple('Batch', ['data'])
         self.batch_size = batch_size
 
-    def loadModel(self, network_path, network_epoch, use_gpu, batch_size):
+    def loadModel(self, network_path: str, network_epoch: int, use_gpu: bool, batch_size: int):
+        """Loads saved MXNet model.
+
+        :param str network_path: Path to the save network.
+        :param int network_epoch: Epoch of the saved model.
+        :param bool use_gpu: Flag to use a gpu. Should be False if no GPU is present.
+        :param int batch_size: Batch size.
+
+        :returns: MXNet network.
+
+        :rtype: mx.mod.Module
+        """
         import mxnet as mx
 
         sym, arg_params, aux_params = mx.model.load_checkpoint(

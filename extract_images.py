@@ -104,6 +104,7 @@ def main(args):
     in the defined output directory under escaped name of the extractor.
 
     Arguments:
+    
     * ``extractors`` (``e``) - Name of an extractor. Can be defined multiple times to use multiple \
         extractors. Example: ``-e "ResNetV2Extractor('50')" -e "ResNetV2Extractor('101')"``
     * ``image_list`` (``i``) - Path to the input image list.

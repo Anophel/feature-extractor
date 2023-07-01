@@ -2,7 +2,17 @@ import numpy as np
 from .extractor import Extractor
 
 class VLADExctractor(Extractor):
+    """
+    Extractor that computes VLAD feature vectors.
+    """
+
     def __init__(self, dictionary_path: str = "models/VLAD_dict_64.npy", alpha: int = 0.5) -> None:
+        """Constructor method
+
+        :param str dictionary_path: Path to the saved VLAD dictionary.
+        :param int alpha: Alpha parameter for the power-law normalization.
+        """
+
         super().__init__()
         import cv2 as cv
         cv.setNumThreads(4)

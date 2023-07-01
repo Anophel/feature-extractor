@@ -93,6 +93,7 @@ def main(args):
     CLI tool for computing ranks for each triplet.
 
     Arguments:
+    
     * ``triplets`` (``t``) - Path to the triplets CSV file.
     * ``models_path`` (``m``) - Path to the extracted features.
     * ``output`` (``o``) - Path to the output CSV.
