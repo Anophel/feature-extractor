@@ -18,6 +18,14 @@ COLOR_MODEL = "RGBHistogramExtractor_64__imagelist_jpg_part.txt_cosine_distance"
 VLAD_MODEL = "VLADExctractor___imagelist_jpg_part.txt_cosine_distance"
 
 def main(args):
+    """
+    CLI tool for creating sql inserts for the master's thesis study.
+
+    Arguments:
+    * ``input_file`` (``i``) - Path to the input CSV triplets.
+    * ``output_file`` (``o``) - Path to an output file with SQL inserts.
+    * ``category`` (``c``) - Triplets' category.
+    """
     input_file = args.input_file
     assert os.path.isfile(input_file)
 
@@ -59,7 +67,7 @@ def main(args):
         sqls.append(f"insert into triplets values (nextval('default_sequence'), "
             f"'{target_path}', '{option_one_path}', '{option_two_path}', '{model_name}',"
             f"{model_favorite}, {deep_learning_favorite}, {color_favorite}, {vlad_favorite},"
-            f"{option_one_bin}, {option_two_bin}, 'v2');")
+            f"{option_one_bin}, {option_two_bin}, 'v2', '{args.category}', 0);")
     with open(args.output_file, 'w') as f:
         f.write("\n".join(sqls))
 

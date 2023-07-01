@@ -16,6 +16,13 @@ COLOR_MODEL = "RGBHistogramExtractor_64__imagelist_jpg_part.txt_cosine_distance"
 VLAD_MODEL = "VLADExctractor___imagelist_jpg_part.txt_cosine_distance"
 
 def main(args):
+    """
+    CLI tool for creating sql inserts for the preliminary study.
+
+    Arguments:
+    * ``input_file`` (``i``) - Path to the input CSV triplets.
+    * ``output_file`` (``o``) - Path to an output file with SQL inserts.
+    """
     input_file = args.input_file
     assert os.path.isfile(input_file)
 

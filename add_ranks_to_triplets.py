@@ -72,13 +72,14 @@ DISTANCE_MEASURES = {
 }
 
 def filter_image_list_and_features(image_list: list, features: np.ndarray, videos_list: list):
-    """
+    """Filter image list and features based on the desired videos_list.
 
         :param list image_list: Image list
         :param np.ndarray features: Image features
         :param list videos_list: List of video identifications
 
-        :returns: 
+        :returns: Filtered image list and features based on the video_list. If video_list is null,\
+        then the image list and features are returned unchanged.
 
         :rtype: tuple
     """

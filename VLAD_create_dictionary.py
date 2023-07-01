@@ -2,14 +2,7 @@ import argparse
 import numpy as np
 from extractors import *
 import logging
-from os import access
-from os import R_OK
-from os import W_OK
-from os.path import isfile
-from os.path import isdir
 import os
-import sys
-import time
 from sklearn.cluster import KMeans
 
 parser = argparse.ArgumentParser()
@@ -20,7 +13,15 @@ parser.add_argument("-o", "--output_dir", required=True,
 parser.add_argument("-s", "--size", required=True, type=int,
                     help="Size of a dictionary.")
 
-def extract_sift(image_paths):
+def extract_sift(image_paths: list):
+    """Extract SIFT features from images whos paths are stored in image_paths.
+
+        :param list image_paths: List of image paths
+
+        :returns: SIFT feature metrix
+
+        :rtype: np.ndarray
+    """
     import cv2 as cv
     sift = cv.SIFT_create()
 
@@ -36,6 +37,14 @@ def extract_sift(image_paths):
     return np.concatenate(features)
 
 def main(args):
+    """
+    CLI tool for creating a visual dictionary for the VLAD.
+
+    Arguments:
+    * ``image_list`` (``i``) - Path to the input image list.
+    * ``output_dir`` (``o``) - Directory for the output file.
+    * ``size`` (``s``) - Size of the dictionary.
+    """
     logging.basicConfig(
             format='%(levelname)s:\t%(message)s', level=logging.INFO)
 
