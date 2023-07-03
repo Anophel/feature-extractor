@@ -1,0 +1,10 @@
+input_dir: /data/features
+output_file: /data/features/triplets.csv
+targets: 2
+distance_measures:
+  - cosine_distance
+  - euclidean_distance
+distance_classes:
+  - 3
+  - 5
+  - 10

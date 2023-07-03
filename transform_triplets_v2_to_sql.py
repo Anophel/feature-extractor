@@ -12,10 +12,12 @@ parser.add_argument("-o", "--output_file", required=True, type=str,
                     help="Output sql file.")
 parser.add_argument("-c", "--category", required=True, type=str,
                     help="Category of the samples.")
-
-DEEP_LEARNING_MODEL = "W2VVExtractor_networks_path:.feature-extractor-models..batch_size:64__imagelist_jpg_part.txt_cosine_distance"
-COLOR_MODEL = "RGBHistogramExtractor_64__imagelist_jpg_part.txt_cosine_distance"
-VLAD_MODEL = "VLADExctractor___imagelist_jpg_part.txt_cosine_distance"
+parser.add_argument("-dl", "--deep_learning_prefix", default="W2VVExtractor_networks_path:.feature-extractor-models..batch_size:64__imagelist_jpg_part.txt_cosine_distance", 
+                    type=str, help="Prefix of a deep learning model for gamification.")
+parser.add_argument("-col", "--color_prefix", default="RGBHistogramExtractor_64__imagelist_jpg_part.txt_cosine_distance", type=str,
+                    help="Prefix of a color model for gamification.")
+parser.add_argument("-vlad", "--vlad_prefix", default="VLADExctractor___imagelist_jpg_part.txt_cosine_distance", type=str,
+                    help="Prefix of VLAD model for gamification.")
 
 def main(args):
     """
@@ -25,6 +27,9 @@ def main(args):
     * ``input_file`` (``i``) - Path to the input CSV triplets.
     * ``output_file`` (``o``) - Path to an output file with SQL inserts.
     * ``category`` (``c``) - Triplets' category.
+    * ``deep_learning_prefix`` (``dl``) - Prefix of a deep learning model for gamification.
+    * ``color_prefix`` (``col``) - Prefix of a color model for gamification.
+    * ``vlad_prefix`` (``vlad``) - Prefix of VLAD model for gamification.
     """
     input_file = args.input_file
     assert os.path.isfile(input_file)
@@ -42,9 +47,9 @@ def main(args):
         option_one_bin = row["closer_bin"]
         option_two_bin = row["farther_bin"]
         model_favorite = 0
-        deep_learning_favorite = 0 if row[f"{DEEP_LEARNING_MODEL}_closer"] < row[f"{DEEP_LEARNING_MODEL}_farther"] else 1
-        color_favorite = 0 if row[f"{COLOR_MODEL}_closer"] < row[f"{COLOR_MODEL}_farther"] else 1
-        vlad_favorite = 0 if row[f"{VLAD_MODEL}_closer"] < row[f"{VLAD_MODEL}_farther"] else 1
+        deep_learning_favorite = 0 if row[f"{args.deep_learning_prefix}_closer"] < row[f"{args.deep_learning_prefix}_farther"] else 1
+        color_favorite = 0 if row[f"{args.color_prefix}_closer"] < row[f"{args.color_prefix}_farther"] else 1
+        vlad_favorite = 0 if row[f"{args.vlad_prefix}_closer"] < row[f"{args.vlad_prefix}_farther"] else 1
 
         # Randomly switch better images
         second_is_closer = bool(random.getrandbits(1))

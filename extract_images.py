@@ -106,7 +106,7 @@ def main(args):
     Arguments:
     
     * ``extractors`` (``e``) - Name of an extractor. Can be defined multiple times to use multiple \
-        extractors. Example: ``-e "ResNetV2Extractor('50')" -e "ResNetV2Extractor('101')"``
+        extractors. Example: ``-e "ResNetV2Extractor('50')" "ResNetV2Extractor('101')"``
     * ``image_list`` (``i``) - Path to the input image list.
     * ``output_dir`` (``o``) - Path to the output directory.
     * ``verbose`` (``v``) - Set the verbosity level to at least INFO.
