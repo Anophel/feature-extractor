@@ -90,13 +90,13 @@ and SQL insert statements into that directory. A sample images generated from [S
 Simply build the container:
 
 ```
-sudo docker build -t feature-extractor .
+docker build -t feature-extractor .
 ```
 
 Then run the container:
 
 ```
-sudo docker run -v ./samples:/data feature-extractor
+docker run -v `realpath ./samples`:/data feature-extractor
 ```
 
 The resulting image features, triplets and SQL statements will be saved in the `./samples/features` directory.
