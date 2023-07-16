@@ -1,11 +1,11 @@
 # Feature extractors
 
-Feature extractors is a project for easy feature extraction and dataset cleaning.
+Feature extractors project is a project for easy feature extraction and dataset cleaning.
 This project was created for user study [Less Is More: Similarity Models for Content-Based Video Retrieval](https://doi.org/10.1007/978-3-031-27818-1_5) and my Master's thesis.
 
 This project handles:
 
-* Image feature extration
+* Image feature extraction
 * Dataset cleaning
 * Triplet generation
 * Converting triplets to SQL insert statements
@@ -39,8 +39,7 @@ The second method uses a CLI tool that takes a list of images and saves Numpy ma
 
 ### Python Usage
 
-The direct usage can be used in the cases that require some additional postprocessing, generate image list dynamically,
-or in a real time application.
+Direct usage can be used in cases that require some additional postprocessing, generating an image list dynamically, or in a real-time application.
 
 An example of the usage can be found in [extract_images.py](extract_images.html) or here:
 
@@ -61,7 +60,7 @@ image_features = extractor(images_paths) # Extract image features
 
 ### CLI Usage
 
-The CLI usage is suitable for one time feature extraction.
+The CLI usage is suitable for easy one-time feature extraction.
 
 ```
 python extract_images.py -e 'CIELABKMeansExctractor(k=8)' 'CLIPExtractor(size="small")' -i ./imagelist.txt -o ./output --batch_size 16 -ev
@@ -69,12 +68,20 @@ python extract_images.py -e 'CIELABKMeansExctractor(k=8)' 'CLIPExtractor(size="s
 
 ## Dataset Cleaning
 
-The dataset cleaning can be done using [Dataset](manipulators.html#manipulators.dataset.Dataset) class in the [manipulators](manipulators.html) package.
+The dataset cleaning can be done using the [Dataset](manipulators.html#manipulators.dataset.Dataset) class in the [manipulators](manipulators.html) package. This class provides platheora techniques to visualize and delete images from the dataset and save the result.
 
 An example of dataset cleaning can be seen in the [dataset-cleaning.ipynb](https://github.com/Anophel/feature-extractor/blob/master/dataset_cleaning.ipynb)
 
 ## Triplet Generation
 
+The main method of the triplet generation reads the configuration file. Then the triplets are created accordingly.
+
+* input_dir - The directory with the txt and npy outputs from the feature extraction implemented in extract_images.
+* output_file - Name of the output CSV file
+* targets - Number of distinct target images. The targets will be the same for all the extractors.
+* distance_measures - List of distance measures for the triplet generation.
+* distance_classes - Distance classes for the triplets. Each distance class is defined with its end index. The start index is computed as previous end index + 1.
+* videos_filter - (Optional) Path to a file with identifications of videos.
 
 
 ```
@@ -84,8 +91,7 @@ python create_triplets_v2.py -c "./config/create_triplets.yaml"
 ## Processing Pipeline
 
 For running simple processing pipeline and create input data for the user study, a docker image is prepared.
-It takes a directory with images and image list as an input and it outputs the feature matrices, triplets
-and SQL insert statements into that directory. A sample images generated from [Stable diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion) with the image list are provided in the directory samples
+It takes a directory with images and an image list as input, and it outputs the feature matrices, triplets, and SQL insert statements into that directory. Sample images generated from [Stable diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion) with the image list are provided in the directory samples
 
 Simply build the container:
 
